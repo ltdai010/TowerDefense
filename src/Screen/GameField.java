@@ -14,7 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
@@ -28,6 +27,7 @@ public class GameField extends JPanel implements Runnable{
     private BuyTowerButton buyAntiTankTowerButton;
     private BuyTowerButton buyMachineGunTowerButton;
     private BuyTowerButton buyMissileTowerButton;
+    private SellTowerButton sellTowerButton;
     private JButton quit;
     private Thread animator;
     private Map map;
@@ -136,8 +136,8 @@ public class GameField extends JPanel implements Runnable{
 
     private void initButton()
     {
-        buyNormalTowerButton = new BuyNormalTowerTowerButton(GameEntity.SCREENWIDTH/2 - 200,525, bunchOfTower, this, map);
-        buySniperTowerButton = new BuySniperTowerTowerButton(GameEntity.SCREENWIDTH/2 - 100,525 , bunchOfTower, this, map);
+        buyNormalTowerButton = new BuyNormalTowerButton(GameEntity.SCREENWIDTH/2 - 200,525, bunchOfTower, this, map);
+        buySniperTowerButton = new BuySniperTowerButton(GameEntity.SCREENWIDTH/2 - 100,525 , bunchOfTower, this, map);
         buyAntiTankTowerButton = new BuyAnitiTankTowerButton(GameEntity.SCREENWIDTH/2 ,525 , bunchOfTower, this, map);
         buyMachineGunTowerButton = new BuyMachineGunTowerButton(GameEntity.SCREENWIDTH/2 + 100,525 , bunchOfTower, this, map);
         buyMissileTowerButton = new BuyMissileTowerButton(GameEntity.SCREENWIDTH/2 + 200,525 , bunchOfTower, this, map);
@@ -151,10 +151,12 @@ public class GameField extends JPanel implements Runnable{
         addMouseListener(buyAntiTankTowerButton);
         addMouseListener(buyMachineGunTowerButton);
         addMouseListener(buyMissileTowerButton);
+        sellTowerButton = new SellTowerButton(GameEntity.SCREENWIDTH/2 + 300, 525, bunchOfTower,this, map);
+        this.add(sellTowerButton);
+        addMouseListener(sellTowerButton);
         quit = new JButton("=");
         quit.setBackground(Color.WHITE);
         quit.setBorder(null);
-        quit.setMargin(null);
         quit.setBounds(1100, 0, 50,50);
         this.add(quit);
         quit.addActionListener(new ActionListener() {
@@ -184,8 +186,6 @@ public class GameField extends JPanel implements Runnable{
         });
     }
 
-
-
     private void onClickDraw(Graphics g)
     {
         buyNormalTowerButton.onClickDraw(g);
@@ -193,6 +193,7 @@ public class GameField extends JPanel implements Runnable{
         buyAntiTankTowerButton.onClickDraw(g);
         buyMissileTowerButton.onClickDraw(g);
         buyMachineGunTowerButton.onClickDraw(g);
+        sellTowerButton.onClickDraw(g);
     }
 
     public BuyTowerButton getBuyAntiTankTowerButton() {

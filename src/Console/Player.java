@@ -48,7 +48,7 @@ public class Player{
     {
         try {
             file = new File("src\\save\\score\\" + this.name +".txt");
-            FileWriter fileWriter = new FileWriter(file, true);
+            FileWriter fileWriter = new FileWriter(file);
             fileWriter.append(this.name + "\n");
             fileWriter.append(score + "\n");
             fileWriter.close();
@@ -61,7 +61,7 @@ public class Player{
     {
         try {
             file = new File("src\\save\\game\\player.txt");
-            FileWriter fileWriter = new FileWriter(file, true);
+            FileWriter fileWriter = new FileWriter(file);
             fileWriter.append(this.name + "\n");
             fileWriter.append(Integer.toString(score));
             fileWriter.append("\n");
@@ -70,13 +70,13 @@ public class Player{
                 fileWriter.append("\n");
                 fileWriter.append(tower.toString());
             }
-            fileWriter.append("end");
+            fileWriter.append("\nend");
             for (Enemy enemy: gameField.getBunchOfEnemy().getBunch())
             {
                 fileWriter.append("\n");
                 fileWriter.append(enemy.toString());
             }
-            fileWriter.append("end");
+            fileWriter.append("\nend");
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();

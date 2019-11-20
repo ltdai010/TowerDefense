@@ -88,6 +88,11 @@ public class SniperTower extends Tower {
     }
 
     @Override
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
     public String toString()
     {
         return "ST " + locationX + " " + locationY;

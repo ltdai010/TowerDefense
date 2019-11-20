@@ -87,6 +87,11 @@ public class MissileTower extends Tower {
     }
 
     @Override
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
     public String toString()
     {
         return "MT " + locationX + " " + locationY;

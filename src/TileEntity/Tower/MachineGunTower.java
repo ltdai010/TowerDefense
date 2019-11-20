@@ -88,6 +88,11 @@ public class MachineGunTower extends Tower {
     }
 
     @Override
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
     public String toString()
     {
         return "MGT " + locationX + " " + locationY;

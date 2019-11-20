@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.util.Scanner;
+import Button.ButtonImage;
 
 public class Menu extends JFrame{
     private ButtonImage continued;

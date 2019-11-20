@@ -72,6 +72,8 @@ public abstract class Tower implements GameTileEntity {
 
     public abstract void fireBullet(Enemy enemy);
 
+    public abstract int getPrice();
+
     protected double checkAngle(Enemy enemy)
     {
         double x = enemy.getPoint().getX() - (double)locationX;

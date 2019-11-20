@@ -89,6 +89,11 @@ public class AntiTankTower extends Tower {
     }
 
     @Override
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
     public String toString()
     {
         return "AT " + locationX + " " + locationY;

@@ -1,21 +1,7 @@
 
-9440
+9710
 
-MT 500 200
-MT 600 400
+MT 750 300
 end
-NE 57 250
+NE 
 end
-
-9440
-
-MT 500 200
-MT 600 400end
-NE 
-NE end
-9440
-
-MT 500 200
-MT 600 400end
-NE 
-NE end

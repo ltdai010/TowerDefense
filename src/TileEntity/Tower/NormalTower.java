@@ -87,6 +87,11 @@ public class NormalTower extends Tower {
     }
 
     @Override
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
     public String toString()
     {
         return "NT " + locationX + " " + locationY;
