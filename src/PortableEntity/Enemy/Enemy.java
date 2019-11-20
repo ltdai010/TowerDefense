@@ -171,4 +171,7 @@ public abstract class Enemy implements GameEntity {
     {
         healthBar.draw(g);
     }
+    public boolean checkPreMove(int direction){
+        return (this.direction == direction);
+    }
 }
