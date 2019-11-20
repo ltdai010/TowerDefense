@@ -14,10 +14,12 @@ import java.util.Scanner;
 
 public class Menu extends JFrame{
     private JButton continued;
-    private JButton start;
-    private JButton instruction;
-    private JButton quit;
+    private ButtonImage start;
+    private ButtonImage instruction;
+    private ButtonImage quit;
     private JButton create;
+    private ImageIcon background;
+    private JLabel back;
     private TextField playerName;
     private final int sizeX = 1206;
     private final int sizeY = 630;
@@ -33,19 +35,25 @@ public class Menu extends JFrame{
         continued = new JButton("Continue");
         add(continued);
         continued.setBounds(200, 100, 100, 50);
-        start = new JButton("Start");
+        start = new ButtonImage("src\\img\\play.png","src\\img\\roll-play.png", 150, 150);
         add(start);
-        start.setBounds(100, 100, 100, 50);
-        instruction = new JButton("Instruction");
+        start.setBounds(520, 410, 150, 150);
+        instruction = new ButtonImage("src\\img\\about.png", "src\\img\\roll-about.png",100,100);
         add(instruction);
-        instruction.setBounds(100, 200, 100, 50);
-        quit = new JButton("Quit");
+        instruction.setBounds(700, 440, 100, 100);
+        quit = new ButtonImage("src\\img\\close.png", "src\\img\\roll-close.png", 100, 100);
         add(quit);
-        quit.setBounds(100, 300, 100, 50);
+        quit.setBounds(400, 440, 100, 100);
         create = new JButton("Create");
         create.setBounds(450, 100, 100, 50);
         this.add(create);
         create.setVisible(false);
+        loadBackground();
+        back = new JLabel("",background, JLabel.CENTER);
+        back.setBounds(0,0, sizeX, sizeY);
+        add(back);
+        setIconImage(new ImageIcon("src\\img\\game-icon.png").getImage());
+        setTitle("Tower Defense Game");
         initButton();
     }
     private void initButton()
@@ -109,5 +117,10 @@ public class Menu extends JFrame{
     private void instructionAction()
     {
 
+    }
+    public void loadBackground(){
+        background = new ImageIcon("src\\img\\background.png");
+        Image image = background.getImage().getScaledInstance(sizeX, sizeY, Image.SCALE_SMOOTH);
+        background = new ImageIcon(image);
     }
 }

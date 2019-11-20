@@ -15,10 +15,15 @@ public abstract class Enemy implements GameEntity {
     protected Map Map;
     protected HealthBar healthBar;
     protected Image enemy;
+    protected Image rotatedEnemy;
     protected long sleepMove;
     protected double armor;
     protected double HP;
-
+    protected static int UP = 1;
+    protected static int DOWN = 2;
+    protected static int RIGHT = 3;
+    protected static int LEFT = 4;
+    protected int direction = RIGHT;
     public Enemy(Map map)
     {
         copyMap(map);
@@ -46,6 +51,13 @@ public abstract class Enemy implements GameEntity {
         this.point = point;
     }
 
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
 
     public Point getPoint() {
         return point;
@@ -102,7 +114,7 @@ public abstract class Enemy implements GameEntity {
     public abstract double getMaxHP();
     public void draw(Graphics g)
     {
-        g.drawImage(enemy, locationX, locationY, null);
+        g.drawImage(rotatedEnemy, locationX, locationY, null);
     }
 
     public boolean move()
@@ -118,6 +130,10 @@ public abstract class Enemy implements GameEntity {
             }
             else if(j < 23 && map[i][j + 1] == Map.ROAD && locationY == i * 50)
             {
+                if (!checkPreMove(RIGHT)){
+                    setDirection(RIGHT);
+                    rotatedEnemy = rotateImageByDegrees(toBufferedImage(enemy), 0);
+                }
                 ++locationX;
             }
             else if(j > 0 && map[i][j - 1] == Map.ROAD)
@@ -126,10 +142,18 @@ public abstract class Enemy implements GameEntity {
             }
             else if(i < 11 && map[i + 1][j] == Map.ROAD)
             {
+                if (!checkPreMove(DOWN)){
+                    setDirection(DOWN);
+                    rotatedEnemy = rotateImageByDegrees(toBufferedImage(enemy), 90);
+                }
                 ++locationY;
             }
             else if(i > 0 && map[i - 1][j] == Map.ROAD)
             {
+                if (!checkPreMove(UP)){
+                    setDirection(UP);
+                    rotatedEnemy = rotateImageByDegrees(toBufferedImage(enemy), -90);
+                }
                 --locationY;
             }
             else
