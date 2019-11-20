@@ -28,6 +28,8 @@ public class GameStage extends JFrame {
         setLocationRelativeTo(null);
         setLayout(null);
         GameField gameField = new GameField(player, this, operation);
+        setTitle("Tower Defense Game");
+        setIconImage(new ImageIcon("src\\img\\game-icon.png").getImage());
         add(gameField);
     }
 
