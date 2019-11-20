@@ -13,7 +13,7 @@ import java.nio.file.Files;
 import java.util.Scanner;
 
 public class Menu extends JFrame{
-    private JButton continued;
+    private ButtonImage continued;
     private ButtonImage start;
     private ButtonImage instruction;
     private ButtonImage quit;
@@ -32,18 +32,18 @@ public class Menu extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
-        continued = new JButton("Continue");
+        continued = new ButtonImage("src\\img\\continued.png", "src\\img\\roll-continued.png", 100, 100);
         add(continued);
-        continued.setBounds(200, 100, 100, 50);
+        continued.setBounds(400, 440, 100, 100);
         start = new ButtonImage("src\\img\\play.png","src\\img\\roll-play.png", 150, 150);
         add(start);
         start.setBounds(520, 410, 150, 150);
         instruction = new ButtonImage("src\\img\\about.png", "src\\img\\roll-about.png",100,100);
         add(instruction);
         instruction.setBounds(700, 440, 100, 100);
-        quit = new ButtonImage("src\\img\\close.png", "src\\img\\roll-close.png", 100, 100);
+        quit = new ButtonImage("src\\img\\close.png", "src\\img\\roll-close.png", 50, 50);
         add(quit);
-        quit.setBounds(400, 440, 100, 100);
+        quit.setBounds(1120, 10, 50, 50);
         create = new JButton("Create");
         create.setBounds(450, 100, 100, 50);
         this.add(create);
