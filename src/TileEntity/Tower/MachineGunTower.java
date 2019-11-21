@@ -11,11 +11,11 @@ import java.awt.*;
 
 public class MachineGunTower extends Tower {
     public static final int price = 120;
-    private static final int sizeX = 50;
-    private static final int sizeY = 50;
-    private static final int RANGE = 200;
-    private static final int fireRate = 200;
-    private static final int bulletSpeedRate = 5;
+    public static final int sizeX = 50;
+    public static final int sizeY = 50;
+    public static final int RANGE = 200;
+    public static final int fireRate = 200;
+    public static final int bulletSpeedRate = 5;
     public MachineGunTower(int locationX, int locationY, Player player) {
         super(locationX, locationY, player);
         loadImage();

@@ -4,16 +4,15 @@ import Console.HealthBar;
 
 import java.awt.*;
 
-public class Target extends Road{
+public class Target implements GameTileEntity {
     private Point point;
     public static final int MaxHP = 100;
     private int HP;
     private HealthBar healthBar;
     public Target(int locationX, int locationY) {
-        super(locationX, locationY);
         point = new Point(locationX, locationY);
         HP = MaxHP;
-        healthBar = new HealthBar(this.getLocationX(), this.getLocationY(), this.getSizeX(), 5);
+        healthBar = new HealthBar(1050, 520, 150, 20);
     }
 
     public void setPoint(Point point) {
@@ -29,10 +28,42 @@ public class Target extends Road{
         healthBar.decreaseGreenBar((double)this.HP/(double)MaxHP);
     }
 
-    @Override
     public void draw(Graphics g)
     {
-        super.draw(g);
         healthBar.draw(g);
+    }
+    @Override
+    public void loadImage() {
+
+    }
+
+    @Override
+    public Image getImage() {
+        return null;
+    }
+
+    @Override
+    public int getLocationX() {
+        return 0;
+    }
+
+    @Override
+    public int getLocationY() {
+        return 0;
+    }
+
+    @Override
+    public int getSizeX() {
+        return 0;
+    }
+
+    @Override
+    public int getSizeY() {
+        return 0;
+    }
+
+    @Override
+    public void setLocation(int x, int y) {
+
     }
 }

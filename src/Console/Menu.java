@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Scanner;
 import Button.ButtonImage;
@@ -93,10 +94,13 @@ public class Menu extends JFrame{
                 Scanner scanner = new Scanner(fileReader);
                 Player player = new Player(scanner.nextLine());
                 player.setScore(scanner.nextInt());
+                fileReader.close();
                 GameStage gameStage = new GameStage(sizeX, sizeY, player, GameField.CONTINUE);
                 this.setVisible(false);
                 this.dispose();
             } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

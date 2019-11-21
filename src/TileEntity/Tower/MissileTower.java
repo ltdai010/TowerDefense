@@ -10,11 +10,11 @@ import java.awt.*;
 
 public class MissileTower extends Tower {
     public static final int price = 300;
-    private static final int sizeX = 50;
-    private static final int sizeY = 50;
-    private static final int RANGE = 1500;
-    private static final int fireRate = 2000;
-    private static final int bulletSpeedRate = 2;
+    public static final int sizeX = 50;
+    public static final int sizeY = 50;
+    public static final int RANGE = 500;
+    public static final int fireRate = 2000;
+    public static final int bulletSpeedRate = 2;
     public MissileTower(int locationX, int locationY, Player player) {
         super(locationX, locationY, player);
         loadImage();

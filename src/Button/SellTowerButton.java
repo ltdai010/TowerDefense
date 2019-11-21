@@ -124,6 +124,10 @@ public class SellTowerButton extends JButton implements MouseListener {
         return false;
     }
 
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
+    }
+
     @Override
     public void mousePressed(MouseEvent e) {
 

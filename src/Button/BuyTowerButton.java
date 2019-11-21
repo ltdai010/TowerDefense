@@ -96,6 +96,16 @@ public abstract class BuyTowerButton extends JButton implements MouseListener {
         }
     }
 
+    public int getSizeX()
+    {
+        return sizeX;
+    }
+
+    public int getSizeY()
+    {
+        return sizeY;
+    }
+
     @Override
     public void mouseEntered(MouseEvent e) {
 
@@ -126,6 +136,14 @@ public abstract class BuyTowerButton extends JButton implements MouseListener {
             return true;
         }
         return false;
+    }
+
+    public int getLocationX() {
+        return locationX;
+    }
+
+    public int getLocationY() {
+        return locationY;
     }
 
     public void setClicked(boolean clicked) {

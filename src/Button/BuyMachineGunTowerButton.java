@@ -45,10 +45,12 @@ public class BuyMachineGunTowerButton extends BuyTowerButton {
         super.mouseClicked(e);
         if(clicked == true)
         {
-            gameField.getBuyNormalTowerButton().setClicked(false);
-            gameField.getBuySniperTowerButton().setClicked(false);
-            gameField.getBuyAntiTankTowerButton().setClicked(false);
-            gameField.getBuyMissileTowerButton().setClicked(false);
+            gameField.getUi().getBuyNormalTowerButton().setClicked(false);
+            gameField.getUi().getBuySniperTowerButton().setClicked(false);
+            gameField.getUi().getBuyAntiTankTowerButton().setClicked(false);
+            gameField.getUi().getBuyMissileTowerButton().setClicked(false);
+            gameField.getUi().getSellTowerButton().setClicked(false);
+
         }
     }
 }

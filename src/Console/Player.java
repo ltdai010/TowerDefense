@@ -1,6 +1,5 @@
 package Console;
 
-import Bunch.BunchOfEnemy;
 import PortableEntity.Enemy.Enemy;
 import Screen.GameField;
 import TileEntity.Tower.Tower;

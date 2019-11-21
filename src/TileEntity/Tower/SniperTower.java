@@ -11,11 +11,11 @@ import java.awt.*;
 
 public class SniperTower extends Tower {
     public static final int price = 90;
-    private static final int sizeX = 50;
-    private static final int sizeY = 50;
-    private static final int RANGE = 400;
-    private static final int fireRate = 1000;
-    private static final int bulletSpeedRate = 2;
+    public static final int sizeX = 50;
+    public static final int sizeY = 50;
+    public static final int RANGE = 400;
+    public static final int fireRate = 1000;
+    public static final int bulletSpeedRate = 2;
     public SniperTower(int locationX, int locationY, Player player) {
         super(locationX, locationY, player);
         loadImage();

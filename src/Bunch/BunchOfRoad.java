@@ -46,13 +46,13 @@ public class BunchOfRoad extends Bunch{
                 {
                     map[i][j] = Map.ROAD;
                     startPoint = new Spawner(j*50, i*50);
-                    bunch.add(startPoint);
+                    bunch.add(new Road(j*50, i*50));
                 }
                 else if(Integer.parseInt(s[j]) == Map.TARGET)
                 {
                     map[i][j] = Map.ROAD;
                     target = new Target(j*50, i*50);
-                    bunch.add(target);
+                    bunch.add(new Road(j*50, i*50));
                 }
             }
             ++i;

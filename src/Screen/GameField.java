@@ -5,6 +5,7 @@ import Bunch.BunchOfTower;
 import Console.Map;
 import Console.Menu;
 import Console.Player;
+import Console.UI;
 import PortableEntity.Enemy.*;
 import PortableEntity.GameEntity;
 import Button.*;
@@ -22,16 +23,10 @@ public class GameField extends JPanel implements Runnable{
     private BunchOfTower bunchOfTower;
     private Player player;
     private BunchOfEnemy bunchOfEnemy;
-    private BuyTowerButton buyNormalTowerButton;
-    private BuyTowerButton buySniperTowerButton;
-    private BuyTowerButton buyAntiTankTowerButton;
-    private BuyTowerButton buyMachineGunTowerButton;
-    private BuyTowerButton buyMissileTowerButton;
-    private SellTowerButton sellTowerButton;
-    private JButton quit;
     private Thread animator;
     private Map map;
     private GameStage gameStage;
+    private UI ui;
     private boolean pause;
     public static final int CONTINUE = 1;
     public static final int NEW = 0;
@@ -42,6 +37,7 @@ public class GameField extends JPanel implements Runnable{
         pause = false;
         this.gameStage = gameStage;
         initBoard();
+        ui = new UI(this);
         if(operation == NEW)
         {
             player.addScore(10000);
@@ -124,7 +120,6 @@ public class GameField extends JPanel implements Runnable{
         map = new Map();
         bunchOfTower = new BunchOfTower();
         bunchOfEnemy = new BunchOfEnemy();
-        initButton();
         setPreferredSize(new Dimension(GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT));
     }
 
@@ -134,86 +129,16 @@ public class GameField extends JPanel implements Runnable{
         draw(g);
     }
 
-    private void initButton()
-    {
-        buyNormalTowerButton = new BuyNormalTowerButton(GameEntity.SCREENWIDTH/2 - 200,525, bunchOfTower, this, map);
-        buySniperTowerButton = new BuySniperTowerButton(GameEntity.SCREENWIDTH/2 - 100,525 , bunchOfTower, this, map);
-        buyAntiTankTowerButton = new BuyAnitiTankTowerButton(GameEntity.SCREENWIDTH/2 ,525 , bunchOfTower, this, map);
-        buyMachineGunTowerButton = new BuyMachineGunTowerButton(GameEntity.SCREENWIDTH/2 + 100,525 , bunchOfTower, this, map);
-        buyMissileTowerButton = new BuyMissileTowerButton(GameEntity.SCREENWIDTH/2 + 200,525 , bunchOfTower, this, map);
-        this.add(buyNormalTowerButton);
-        this.add(buySniperTowerButton);
-        this.add(buyAntiTankTowerButton);
-        this.add(buyMachineGunTowerButton);
-        this.add(buyMissileTowerButton);
-        addMouseListener(buyNormalTowerButton);
-        addMouseListener(buySniperTowerButton);
-        addMouseListener(buyAntiTankTowerButton);
-        addMouseListener(buyMachineGunTowerButton);
-        addMouseListener(buyMissileTowerButton);
-        sellTowerButton = new SellTowerButton(GameEntity.SCREENWIDTH/2 + 300, 525, bunchOfTower,this, map);
-        this.add(sellTowerButton);
-        addMouseListener(sellTowerButton);
-        quit = new JButton("=");
-        quit.setBackground(Color.WHITE);
-        quit.setBorder(null);
-        quit.setBounds(1100, 0, 50,50);
-        this.add(quit);
-        quit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pause = true;
-                int click = JOptionPane.showConfirmDialog(null, "Save Game?");
-                if(click == JOptionPane.YES_OPTION)
-                {
-                    Menu menu = new Menu();
-                    player.saveGame();
-                    gameStage.setVisible(false);
-                    gameStage.dispose();
-                }
-                if(click == JOptionPane.NO_OPTION)
-                {
-                    Menu menu = new Menu();
-                    player.saveScore();
-                    gameStage.setVisible(false);
-                    gameStage.dispose();
-                }
-                if(click == JOptionPane.CANCEL_OPTION)
-                {
-                    pause = false;
-                }
-            }
-        });
+    public void setPause(boolean pause) {
+        this.pause = pause;
     }
 
-    private void onClickDraw(Graphics g)
-    {
-        buyNormalTowerButton.onClickDraw(g);
-        buySniperTowerButton.onClickDraw(g);
-        buyAntiTankTowerButton.onClickDraw(g);
-        buyMissileTowerButton.onClickDraw(g);
-        buyMachineGunTowerButton.onClickDraw(g);
-        sellTowerButton.onClickDraw(g);
+    public GameStage getGameStage() {
+        return gameStage;
     }
 
-    public BuyTowerButton getBuyAntiTankTowerButton() {
-        return buyAntiTankTowerButton;
-    }
-
-    public BuyTowerButton getBuyNormalTowerButton() {
-        return buyNormalTowerButton;
-    }
-
-    public BuyTowerButton getBuySniperTowerButton() {
-        return buySniperTowerButton;
-    }
-
-    public BuyTowerButton getBuyMachineGunTowerButton() {
-        return buyMachineGunTowerButton;
-    }
-
-    public BuyTowerButton getBuyMissileTowerButton() {
-        return buyMissileTowerButton;
+    public UI getUi() {
+        return ui;
     }
 
     public BunchOfEnemy getBunchOfEnemy() {
@@ -227,10 +152,15 @@ public class GameField extends JPanel implements Runnable{
     public void draw(Graphics g)
     {
         map.draw(g);
-        onClickDraw(g);
+        ui.onClickDraw(g);
         bunchOfTower.drawBullet(g);
         bunchOfTower.draw(g);
         bunchOfEnemy.draw(g);
+        map.getBunchOfRoad().getTarget().draw(g);
+    }
+
+    public Map getMap() {
+        return map;
     }
 
     @Override
@@ -248,6 +178,7 @@ public class GameField extends JPanel implements Runnable{
                     bunchOfEnemy.add(new NormalEnemy(map));
                     spawnTime = System.currentTimeMillis();
                 }
+                ui.setInformationText();
                 bunchOfEnemy.onAction();
                 bunchOfTower.onAction(bunchOfEnemy);
                 repaint();
