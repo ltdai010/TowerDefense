@@ -193,6 +193,7 @@ public class GameField extends JPanel implements Runnable{
     }
 
 
+
     @Override
     public void addNotify() {
         super.addNotify();

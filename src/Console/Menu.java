@@ -47,9 +47,14 @@ public class Menu extends JFrame{
         add(quit);
         quit.setBounds(1120, 10, 50, 50);
         create = new JButton("Create");
-        create.setBounds(450, 100, 100, 50);
+        create.setBounds(720, 400, 100, 50);
         this.add(create);
         create.setVisible(false);
+        playerName = new TextField();
+        playerName.setBounds(500, 400, 200,50);
+        playerName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
+        this.add(playerName);
+        playerName.setVisible(false);
         loadBackground();
         back = new JLabel("",background, JLabel.CENTER);
         back.setBounds(0,0, sizeX, sizeY);
@@ -77,11 +82,8 @@ public class Menu extends JFrame{
         remove(instruction);
         remove(quit);
         remove(continued);
-        playerName = new TextField();
-        playerName.setBounds(100, 100, 300,50);
-        playerName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
-        this.add(playerName);
         create.setVisible(true);
+        playerName.setVisible(true);
     }
 
     private void continueAction()

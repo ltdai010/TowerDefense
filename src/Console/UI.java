@@ -37,6 +37,10 @@ public class UI {
         this.gameField.add(information);
     }
 
+    public JTextArea getInformation() {
+        return information;
+    }
+
     public void setInformationText()
     {
         int mouseX = (int)MouseInfo.getPointerInfo().getLocation().getX() - (int)gameField.getLocationOnScreen().getX();
@@ -47,6 +51,8 @@ public class UI {
             double a = (double) Math.round((double)100000/AntiTankTower.fireRate);
             a = a/100;
             information.setText("AD:"+ AntiTankBullet.damage+"\nAS:" + a + "/s\nRange:"+AntiTankTower.RANGE + "\nDecrease half of the enemy's armor");
+            information.setBounds(buyAntiTankTowerButton.getLocationX(), buyAntiTankTowerButton.getLocationY() - 75, 250, 75);
+            information.setVisible(true);
         }
         else if(mouseX >= buyMachineGunTowerButton.getLocationX() && mouseX <= buyMachineGunTowerButton.getLocationX() + buyMachineGunTowerButton.getSizeX()
                 && mouseY >= buyMachineGunTowerButton.getLocationY() && mouseY <= buyMachineGunTowerButton.getLocationY() + buyMachineGunTowerButton.getSizeY())
@@ -54,6 +60,8 @@ public class UI {
             double a = (double) Math.round((double)100000/MachineGunTower.fireRate);
             a = a/100;
             information.setText("AD:"+ MachineGunBullet.damage+"\nAS:" + a + "/s\nRange:"+ MachineGunTower.RANGE);
+            information.setBounds(buyMachineGunTowerButton.getLocationX(), buyMachineGunTowerButton.getLocationY() - 75, 250, 75);
+            information.setVisible(true);
         }
         else if(mouseX >= buyMissileTowerButton.getLocationX() && mouseX <= buyMissileTowerButton.getLocationX() + buyMissileTowerButton.getSizeX()
                 && mouseY >= buyMissileTowerButton.getLocationY() && mouseY <= buyMissileTowerButton.getLocationY() + buyMissileTowerButton.getSizeY())
@@ -61,6 +69,8 @@ public class UI {
             double a = (double) Math.round((double)100000/MissileTower.fireRate);
             a = a/100;
             information.setText("AD:"+ Missile.damage + "\nAS:" + a + "/s\nRange:"+ MissileTower.RANGE);
+            information.setBounds(buyMissileTowerButton.getLocationX(), buyMissileTowerButton.getLocationY() - 75, 250, 75);
+            information.setVisible(true);
         }
         else if(mouseX >= buyNormalTowerButton.getLocationX() && mouseX <= buyNormalTowerButton.getLocationX() + buyNormalTowerButton.getSizeX()
                 && mouseY >= buyNormalTowerButton.getLocationY() && mouseY <= buyNormalTowerButton.getLocationY() + buyNormalTowerButton.getSizeY())
@@ -68,6 +78,8 @@ public class UI {
             double a = (double) Math.round((double)100000/NormalTower.fireRate);
             a = a/100;
             information.setText("AD:"+ NormalBullet.damage + "\nAS:" + a + "/s\nRange:" + NormalTower.RANGE);
+            information.setBounds(buyNormalTowerButton.getLocationX(), buyNormalTowerButton.getLocationY() - 75, 250, 75);
+            information.setVisible(true);
         }
         else if(mouseX >= buySniperTowerButton.getLocationX() && mouseX <= buySniperTowerButton.getLocationX() + buySniperTowerButton.getSizeX()
                 && mouseY >= buySniperTowerButton.getLocationY() && mouseY <= buySniperTowerButton.getLocationY() + buySniperTowerButton.getSizeY())
@@ -75,10 +87,13 @@ public class UI {
             double a = (double) Math.round((double)100000/SniperTower.fireRate);
             a = a/100;
             information.setText("AD:"+ SniperBullet.damage + "\nAS:" + a + "/s\nRange:" + SniperTower.RANGE);
+            information.setBounds(buySniperTowerButton.getLocationX(), buySniperTowerButton.getLocationY() - 75, 250, 75);
+            information.setVisible(true);
         }
         else
         {
             information.setText("");
+            information.setVisible(false);
         }
     }
 
