@@ -108,11 +108,11 @@ public class UI {
 
     private void initButton()
     {
-        buyNormalTowerButton = new BuyNormalTowerButton(GameEntity.SCREENWIDTH/2 - 200,525, gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buySniperTowerButton = new BuySniperTowerButton(GameEntity.SCREENWIDTH/2 - 100,525 , gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buyAntiTankTowerButton = new BuyAnitiTankTowerButton(GameEntity.SCREENWIDTH/2 ,525 , gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buyMachineGunTowerButton = new BuyMachineGunTowerButton(GameEntity.SCREENWIDTH/2 + 100,525 , gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buyMissileTowerButton = new BuyMissileTowerButton(GameEntity.SCREENWIDTH/2 + 200,525 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyNormalTowerButton = new BuyNormalTowerButton(GameEntity.SCREENWIDTH/2 - 200,515, gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buySniperTowerButton = new BuySniperTowerButton(GameEntity.SCREENWIDTH/2 - 100,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyAntiTankTowerButton = new BuyAnitiTankTowerButton(GameEntity.SCREENWIDTH/2 ,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyMachineGunTowerButton = new BuyMachineGunTowerButton(GameEntity.SCREENWIDTH/2 + 100,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyMissileTowerButton = new BuyMissileTowerButton(GameEntity.SCREENWIDTH/2 + 200,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
         gameField.add(buyNormalTowerButton);
         gameField.add(buySniperTowerButton);
         gameField.add(buyAntiTankTowerButton);
