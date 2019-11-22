@@ -1,8 +1,6 @@
 package Console;
 
-import Bunch.BunchOfGround;
-import Bunch.BunchOfMountain;
-import Bunch.BunchOfRoad;
+import Bunch.*;
 
 import java.awt.*;
 

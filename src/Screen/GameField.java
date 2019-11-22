@@ -172,10 +172,10 @@ public class GameField extends JPanel implements Runnable{
     public void draw(Graphics g)
     {
         map.draw(g);
-        ui.onClickDraw(g);
         bunchOfTower.drawBullet(g);
         bunchOfTower.draw(g);
         bunchOfEnemy.draw(g);
+        ui.onClickDraw(g);
         map.getBunchOfRoad().getTarget().draw(g);
     }
 
@@ -187,7 +187,6 @@ public class GameField extends JPanel implements Runnable{
     public void run() {
         bunchOfEnemy.setSleepTime(System.currentTimeMillis());
         bunchOfTower.setSleepTime(System.currentTimeMillis());
-        bunchOfEnemy.add(new NormalEnemy(map));
         map.getBunchOfRoad().getStartPoint().setStartTime(System.currentTimeMillis());
         while (true)
         {
@@ -196,11 +195,10 @@ public class GameField extends JPanel implements Runnable{
                 ui.setInformationText();
                 bunchOfEnemy.onAction();
                 bunchOfTower.onAction(bunchOfEnemy);
-                if(!map.getBunchOfRoad().getStartPoint().spawnEnemy())
+                if(stage < 2 && !map.getBunchOfRoad().getStartPoint().spawnEnemy())
                 {
                     ++stage;
-                    if(stage <3 )
-                        loadStage();
+                    loadStage();
                 }
                 repaint();
                 Toolkit.getDefaultToolkit().sync();
