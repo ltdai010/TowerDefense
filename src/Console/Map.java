@@ -50,9 +50,9 @@ public class Map {
         bunchOfMountain = new BunchOfMountain(this, mapNumber);
         bunchOfRoad = new BunchOfRoad(this, mapNumber);
         bunchOfGround = new BunchOfGround(this);
-        bunchOfTree = new BunchOfTree(this);
-        bunchOfGlass = new BunchOfGlass(this);
-        bunchOfRock = new BunchOfRock(this);
+        bunchOfTree = new BunchOfTree(this, mapNumber);
+        bunchOfGlass = new BunchOfGlass(this, mapNumber);
+        bunchOfRock = new BunchOfRock(this, mapNumber);
     }
     public void addObject(int i, int j, int Object)
     {

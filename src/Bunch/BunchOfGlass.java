@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BunchOfGlass extends Bunch{
-    public BunchOfGlass(Map map)
+    public BunchOfGlass(Map map, String mapNumber)
     {
         try {
-            setupGlass(map.getMap());
+            setupGlass(map.getMap(), mapNumber);
         }catch (IOException e)
         {
             System.out.println(e.getMessage());
@@ -24,8 +24,8 @@ public class BunchOfGlass extends Bunch{
 
     ArrayList<Glass> bunch = new ArrayList<>();
 
-    public  void setupGlass(int[][] map) throws FileNotFoundException {
-        File file = new File("src\\file\\map.txt");
+    public  void setupGlass(int[][] map, String mapNumber) throws FileNotFoundException {
+        File file = new File("src\\file\\" + mapNumber + ".txt");
         Scanner scanner = new Scanner(file);
         int i = 0;
         while (scanner.hasNextLine())

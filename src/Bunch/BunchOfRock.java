@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BunchOfRock extends Bunch{
-    public BunchOfRock(Map map)
+    public BunchOfRock(Map map, String mapNumber)
     {
         try {
-            setupRock(map.getMap());
+            setupRock(map.getMap(), mapNumber);
         }catch (IOException e)
         {
             System.out.println(e.getMessage());
@@ -24,8 +24,8 @@ public class BunchOfRock extends Bunch{
 
     ArrayList<Rock> bunch = new ArrayList<>();
 
-    public  void setupRock(int[][] map) throws FileNotFoundException {
-        File file = new File("src\\file\\map.txt");
+    public  void setupRock(int[][] map, String mapNumber) throws FileNotFoundException {
+        File file = new File("src\\file\\" + mapNumber + ".txt");
         Scanner scanner = new Scanner(file);
         int i = 0;
         while (scanner.hasNextLine())
