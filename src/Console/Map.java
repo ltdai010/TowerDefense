@@ -17,6 +17,13 @@ public class Map {
     public static final int MOUNTAIN = 3;
     public static final int SPAWNER = 5;
     public static final int TARGET = 4;
+    public static final int BIG_TREE = 6;
+    public static final int SMALL_TREE = 7;
+    public static final int BIG_ROCK = 8;
+    public static final int SMALL_ROCK = 9;
+    public static final int TINY_ROCK = 10;
+    public static final int GLASS = 11;
+    public static final int WONDERFUL_GLASS = 12;
     private String mapNumber;
     public static final String MAP1 = "map1";
     public static final String MAP2 = "map2";
@@ -36,6 +43,9 @@ public class Map {
         bunchOfMountain = new BunchOfMountain(this, mapNumber);
         bunchOfRoad = new BunchOfRoad(this, mapNumber);
         bunchOfGround = new BunchOfGround(this);
+        bunchOfTree = new BunchOfTree(this);
+        bunchOfGlass = new BunchOfGlass(this);
+        bunchOfRock = new BunchOfRock(this);
     }
     public void addObject(int i, int j, int Object)
     {
@@ -62,11 +72,25 @@ public class Map {
         return bunchOfRoad;
     }
 
+    public BunchOfGlass getBunchOfGlass(){
+        return bunchOfGlass;
+    }
+
+    public BunchOfRock getBunchOfRock() {
+        return bunchOfRock;
+    }
+
+    public BunchOfTree getBunchOfTree() {
+        return bunchOfTree;
+    }
 
     public void draw(Graphics g)
     {
         bunchOfGround.draw(g);
         bunchOfMountain.draw(g);
         bunchOfRoad.draw(g);
+        bunchOfTree.draw(g);
+        bunchOfGlass.draw(g);
+        bunchOfRock.draw(g);
     }
 }
