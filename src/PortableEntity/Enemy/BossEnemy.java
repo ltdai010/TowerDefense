@@ -57,11 +57,11 @@ public class BossEnemy extends Enemy {
     @Override
     public void loadImage()
     {
-        ImageIcon ii = new ImageIcon("src\\img\\enemy.png");
-        Image image= ii.getImage().getScaledInstance(sizeX, sizeY,
-                Image.SCALE_SMOOTH);
-        ii=new ImageIcon(image);
+        ImageIcon ii = new ImageIcon("src\\img\\boss_enemy.png");
+        Image image = ii.getImage().getScaledInstance(sizeX, sizeY, Image.SCALE_SMOOTH);
+        ii = new ImageIcon(image);
         enemy = ii.getImage();
+        rotatedEnemy = ii.getImage();
     }
 
     @Override

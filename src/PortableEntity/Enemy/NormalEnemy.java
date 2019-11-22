@@ -37,7 +37,7 @@ public class NormalEnemy extends Enemy {
     @Override
     public void loadImage()
     {
-        ImageIcon ii = new ImageIcon("src\\img\\normal-enemy.png");
+        ImageIcon ii = new ImageIcon("src\\img\\normal_enemy.png");
         Image image = ii.getImage().getScaledInstance(sizeX, sizeY, Image.SCALE_SMOOTH);
         ii = new ImageIcon(image);
         enemy = ii.getImage();
