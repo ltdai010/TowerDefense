@@ -3,7 +3,9 @@ package Console;
 import Bunch.BunchOfGround;
 import Bunch.BunchOfMountain;
 import Bunch.BunchOfRoad;
-
+import Bunch.BunchOfTree;
+import Bunch.BunchOfGlass;
+import Bunch.BunchOfRock;
 import java.awt.*;
 
 public class Map {
