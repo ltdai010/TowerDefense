@@ -17,18 +17,18 @@ public class BunchOfRoad extends Bunch{
     private ArrayList<Road> bunch = new ArrayList<>();
     private Spawner startPoint;
     private Target target;
-    public BunchOfRoad(Map map)
+    public BunchOfRoad(Map map, String mapNumber)
     {
         try {
-            setUpRoad(map.getMap());
+            setUpRoad(map, mapNumber);
         }catch (IOException e)
         {
             System.out.println(e.getMessage());
         }
     }
 
-    public  void setUpRoad(int[][] map) throws FileNotFoundException {
-        File file = new File("src\\file\\map.txt");
+    public  void setUpRoad(Map map, String mapNumber) throws FileNotFoundException {
+        File file = new File("src\\file\\" + mapNumber + ".txt");
         Scanner scanner = new Scanner(file);
         int i = 0;
         while (scanner.hasNextLine())
@@ -39,18 +39,18 @@ public class BunchOfRoad extends Bunch{
             {
                 if(Integer.parseInt(s[j]) == Map.ROAD)
                 {
-                    map[i][j] = Map.ROAD;
+                    map.getMap()[i][j] = Map.ROAD;
                     add(new Road(j*50, i*50));
                 }
                 else if(Integer.parseInt(s[j]) == Map.SPAWNER)
                 {
-                    map[i][j] = Map.ROAD;
-                    startPoint = new Spawner(j*50, i*50);
+                    map.getMap()[i][j] = Map.ROAD;
+                    startPoint = new Spawner(j*50, i*50, map);
                     bunch.add(new Road(j*50, i*50));
                 }
                 else if(Integer.parseInt(s[j]) == Map.TARGET)
                 {
-                    map[i][j] = Map.ROAD;
+                    map.getMap()[i][j] = Map.ROAD;
                     target = new Target(j*50, i*50);
                     bunch.add(new Road(j*50, i*50));
                 }

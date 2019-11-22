@@ -14,6 +14,7 @@ public class Player{
     private JLabel scoreText;
     private GameField gameField;
     private File file;
+    private int stage;
     public Player(String name)
     {
         this.name = name;
@@ -33,6 +34,14 @@ public class Player{
         scoreText.setBounds(1000, 0, 100, 50);
         scoreText.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
         gameField.add(scoreText);
+    }
+
+    public void setStage(int stage) {
+        this.stage = stage;
+    }
+
+    public int getStage() {
+        return stage;
     }
 
     public GameField getGameField() {
@@ -63,7 +72,7 @@ public class Player{
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.append(this.name + "\n");
             fileWriter.append(Integer.toString(score));
-            fileWriter.append("\n");
+            fileWriter.append("\n" + stage);
             for(Tower tower: gameField.getBunchOfTower().getBunch())
             {
                 fileWriter.append("\n");

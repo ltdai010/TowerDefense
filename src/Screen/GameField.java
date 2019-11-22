@@ -13,8 +13,6 @@ import TileEntity.Tower.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
@@ -27,6 +25,7 @@ public class GameField extends JPanel implements Runnable{
     private Map map;
     private GameStage gameStage;
     private UI ui;
+    private int stage;
     private boolean pause;
     public static final int CONTINUE = 1;
     public static final int NEW = 0;
@@ -36,11 +35,10 @@ public class GameField extends JPanel implements Runnable{
         player.addScoreText();
         pause = false;
         this.gameStage = gameStage;
-        initBoard();
-        ui = new UI(this);
         if(operation == NEW)
         {
             player.addScore(10000);
+            stage = 1;
         }
         else
         {
@@ -50,6 +48,8 @@ public class GameField extends JPanel implements Runnable{
                 e.printStackTrace();
             }
         }
+        initBoard();
+        ui = new UI(this);
     }
 
     private void readFile() throws FileNotFoundException {
@@ -57,7 +57,7 @@ public class GameField extends JPanel implements Runnable{
         Scanner scanner = new Scanner(fileReader);
         scanner.nextLine();
         scanner.nextLine();
-        scanner.nextLine();
+        stage = scanner.nextInt();
         String line = scanner.nextLine();
         while (line.compareTo("end")!=0)
         {
@@ -117,9 +117,29 @@ public class GameField extends JPanel implements Runnable{
         setLayout(null);
         setBounds(0,0, GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT);
         setBackground(Color.WHITE);
-        map = new Map();
+        if(stage == 1)
+        {
+            map = new Map(Map.MAP1);
+        }
+        else if(stage == 2)
+        {
+            map = new Map(Map.MAP2);
+        }
+        else if(stage == 3)
+        {
+            map = new Map(Map.MAP3);
+        }
+        else if(stage == 4)
+        {
+            map = new Map(Map.MAP4);
+        }
+        else if(stage == 5)
+        {
+            map = new Map(Map.MAP5);
+        }
         bunchOfTower = new BunchOfTower();
         bunchOfEnemy = new BunchOfEnemy();
+        map.getBunchOfRoad().getStartPoint().setBunchOfEnemy(bunchOfEnemy);
         setPreferredSize(new Dimension(GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT));
     }
 
@@ -167,29 +187,54 @@ public class GameField extends JPanel implements Runnable{
     public void run() {
         bunchOfEnemy.setSleepTime(System.currentTimeMillis());
         bunchOfTower.setSleepTime(System.currentTimeMillis());
-        long spawnTime = System.currentTimeMillis();
         bunchOfEnemy.add(new NormalEnemy(map));
+        map.getBunchOfRoad().getStartPoint().setStartTime(System.currentTimeMillis());
         while (true)
         {
             if(!pause)
             {
-                if(System.currentTimeMillis() > spawnTime + 2000)
-                {
-                    bunchOfEnemy.add(new NormalEnemy(map));
-                    spawnTime = System.currentTimeMillis();
-                }
                 ui.setInformationText();
                 bunchOfEnemy.onAction();
                 bunchOfTower.onAction(bunchOfEnemy);
+                if(!map.getBunchOfRoad().getStartPoint().spawnEnemy())
+                {
+                    ++stage;
+                    if(stage <3 )
+                        loadStage();
+                }
                 repaint();
                 Toolkit.getDefaultToolkit().sync();
             }
             else {
                 bunchOfEnemy.setSleepTime(System.currentTimeMillis());
                 bunchOfTower.setSleepTime(System.currentTimeMillis());
-                spawnTime = System.currentTimeMillis();
             }
         }
+    }
+
+    public void loadStage()
+    {
+        if(stage == 1)
+        {
+            map = new Map(Map.MAP1);
+        }
+        else if(stage == 2)
+        {
+            map = new Map(Map.MAP2);
+        }
+        else if(stage == 3)
+        {
+            map = new Map(Map.MAP3);
+        }
+        else if(stage == 4)
+        {
+            map = new Map(Map.MAP4);
+        }
+        else if(stage == 5)
+        {
+            map = new Map(Map.MAP5);
+        }
+        map.getBunchOfRoad().getStartPoint().setBunchOfEnemy(bunchOfEnemy);
     }
 
 

@@ -17,7 +17,13 @@ public class Map {
     public static final int MOUNTAIN = 3;
     public static final int SPAWNER = 5;
     public static final int TARGET = 4;
-    public Map()
+    private String mapNumber;
+    public static final String MAP1 = "map1";
+    public static final String MAP2 = "map2";
+    public static final String MAP3 = "map3";
+    public static final String MAP4 = "map4";
+    public static final String MAP5 = "map5";
+    public Map(String mapNumber)
     {
         for(int i = 0; i < 12; ++i)
         {
@@ -26,8 +32,9 @@ public class Map {
                 map[i][j] = GROUND;
             }
         }
-        bunchOfMountain = new BunchOfMountain(this);
-        bunchOfRoad = new BunchOfRoad(this);
+        this.mapNumber = mapNumber;
+        bunchOfMountain = new BunchOfMountain(this, mapNumber);
+        bunchOfRoad = new BunchOfRoad(this, mapNumber);
         bunchOfGround = new BunchOfGround(this);
     }
     public void addObject(int i, int j, int Object)
@@ -37,6 +44,10 @@ public class Map {
     public int getObject(int i, int j)
     {
         return map[i][j];
+    }
+
+    public String getMapNumber() {
+        return mapNumber;
     }
 
     public int[][] getMap() {

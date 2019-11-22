@@ -5,7 +5,6 @@ import PortableEntity.GameEntity;
 import Screen.GameField;
 
 import javax.swing.*;
-
 public class GameStage extends JFrame {
     private Player player;
     private int sizeX = 1200;

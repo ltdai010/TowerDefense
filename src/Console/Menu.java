@@ -25,6 +25,11 @@ public class Menu extends JFrame{
     private TextField playerName;
     private final int sizeX = 1206;
     private final int sizeY = 630;
+    private static final int STAGE1 = 1;
+    private static final int STAGE2 = 2;
+    private static final int STAGE3 = 3;
+    private static final int STAGE4 = 4;
+    private static final int STAGE5 = 5;
     public Menu()
     {
         pack();
