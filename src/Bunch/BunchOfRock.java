@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BunchOfRock extends Bunch{
-    public BunchOfRock(Map map, String mapNumber)
+    public BunchOfRock(Map map)
     {
         try {
-            setupRock(map.getMap(), mapNumber);
+            setupRock(map);
         }catch (IOException e)
         {
             System.out.println(e.getMessage());
@@ -24,8 +24,8 @@ public class BunchOfRock extends Bunch{
 
     ArrayList<Rock> bunch = new ArrayList<>();
 
-    public  void setupRock(int[][] map, String mapNumber) throws FileNotFoundException {
-        File file = new File("src\\file\\" + mapNumber + ".txt");
+    private void setupRock(Map map) throws FileNotFoundException {
+        File file = new File("src\\file\\" + map.getMapNumber() + ".txt");
         Scanner scanner = new Scanner(file);
         int i = 0;
         while (scanner.hasNextLine())
@@ -34,22 +34,15 @@ public class BunchOfRock extends Bunch{
             String[] s = line.split(" ");
             for (int j = 0; j < 24; ++j)
             {
-                int type = 0;
                 if(Integer.parseInt(s[j]) == Map.BIG_ROCK)
                 {
-                    map[i][j] = Map.BIG_ROCK;
-                    type = Rock.big_rock;
-                    add(new Rock(j*50, i*50, type));
+                    add(new Rock(j*50, i*50, Rock.big_rock));
                 }
                 else if (Integer.parseInt(s[j]) == Map.SMALL_ROCK){
-                    map[i][j] = Map.SMALL_ROCK;
-                    type = Rock.small_rock;
-                    add(new Rock(j*50, i*50, type));
+                    add(new Rock(j*50, i*50, Rock.small_rock));
                 }
                 else if (Integer.parseInt(s[j]) == Map.TINY_ROCK){
-                    map[i][j] = Map.TINY_ROCK;
-                    type = Rock.tiny_rock;
-                    add(new Rock(j*50, i*50, type));
+                    add(new Rock(j*50, i*50, Rock.tiny_rock));
                 }
             }
             ++i;

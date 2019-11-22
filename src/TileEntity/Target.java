@@ -9,7 +9,8 @@ public class Target implements GameTileEntity {
     public static final int MaxHP = 100;
     private int HP;
     private HealthBar healthBar;
-    public Target(int locationX, int locationY) {
+    public Target(int locationX, int locationY)
+    {
         point = new Point(locationX, locationY);
         HP = MaxHP;
         healthBar = new HealthBar(1050, 520, 150, 20);
@@ -26,6 +27,7 @@ public class Target implements GameTileEntity {
     public void decreaseHP(int HP) {
         this.HP -= HP;
         healthBar.decreaseGreenBar((double)this.HP/(double)MaxHP);
+        healthBar.getGreenBar().getWidth(null);
     }
 
     public void draw(Graphics g)

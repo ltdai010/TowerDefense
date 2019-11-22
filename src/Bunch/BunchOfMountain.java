@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BunchOfMountain extends  Bunch{
-    public BunchOfMountain(Map map, String mapNumber)
+    public BunchOfMountain(Map map)
     {
         try {
-            setupMountain(map.getMap(), mapNumber);
+            setupMountain(map);
         }catch (IOException e)
         {
             System.out.println(e.getMessage());
@@ -24,8 +24,8 @@ public class BunchOfMountain extends  Bunch{
 
     ArrayList<Mountain> bunch = new ArrayList<>();
 
-    public  void setupMountain(int[][] map, String mapNumber) throws FileNotFoundException {
-        File file = new File("src\\file\\" + mapNumber + ".txt");
+    public  void setupMountain(Map map) throws FileNotFoundException {
+        File file = new File("src\\file\\" + map.getMapNumber() + ".txt");
         Scanner scanner = new Scanner(file);
         int i = 0;
         while (scanner.hasNextLine())
@@ -36,7 +36,7 @@ public class BunchOfMountain extends  Bunch{
             {
                 if(Integer.parseInt(s[j]) == Map.MOUNTAIN)
                 {
-                    map[i][j] = Map.MOUNTAIN;
+                    map.getMap()[i][j] = Map.MOUNTAIN;
                     add(new Mountain(j*50, i*50));
                 }
             }

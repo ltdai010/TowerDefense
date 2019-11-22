@@ -59,14 +59,15 @@ public class BunchOfEnemy extends Bunch{
     {
         for (int i = 0; i < bunch.size(); ++i)
         {
-            if(bunch.get(i) != null)
+            if(!bunch.get(i).move())
             {
-                if(!bunch.get(i).move())
-                {
-                    bunch.remove(i);
-                }
-                if (bunch.get(i).getHP() <= 0)
-                    bunch.remove(i);
+                bunch.remove(i);
+                --i;
+            }
+            else if (bunch.get(i).getHP() <= 0)
+            {
+                bunch.remove(i);
+                --i;
             }
         }
     }

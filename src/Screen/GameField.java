@@ -195,10 +195,14 @@ public class GameField extends JPanel implements Runnable{
                 ui.setInformationText();
                 bunchOfEnemy.onAction();
                 bunchOfTower.onAction(bunchOfEnemy);
-                if(stage < 2 && !map.getBunchOfRoad().getStartPoint().spawnEnemy())
+                if(stage < 3 && !map.getBunchOfRoad().getStartPoint().spawnEnemy())
                 {
-                    ++stage;
-                    loadStage();
+                    if(bunchOfEnemy.getBunch().size() == 0)
+                    {
+                        map.getBunchOfRoad().getStartPoint().getScanner().close();
+                        loadStage();
+                        ++stage;
+                    }
                 }
                 repaint();
                 Toolkit.getDefaultToolkit().sync();
@@ -219,6 +223,8 @@ public class GameField extends JPanel implements Runnable{
         else if(stage == 2)
         {
             map = new Map(Map.MAP2);
+            map.getBunchOfRoad().getStartPoint().setBunchOfEnemy(bunchOfEnemy);
+            map.getBunchOfRoad().getStartPoint().setStartTime(System.currentTimeMillis());
         }
         else if(stage == 3)
         {

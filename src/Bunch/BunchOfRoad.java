@@ -17,18 +17,18 @@ public class BunchOfRoad extends Bunch{
     private ArrayList<Road> bunch = new ArrayList<>();
     private Spawner startPoint;
     private Target target;
-    public BunchOfRoad(Map map, String mapNumber)
+    public BunchOfRoad(Map map)
     {
         try {
-            setUpRoad(map, mapNumber);
+            setUpRoad(map);
         }catch (IOException e)
         {
             System.out.println(e.getMessage());
         }
     }
 
-    public  void setUpRoad(Map map, String mapNumber) throws FileNotFoundException {
-        File file = new File("src\\file\\" + mapNumber + ".txt");
+    public  void setUpRoad(Map map) throws FileNotFoundException {
+        File file = new File("src\\file\\" + map.getMapNumber() + ".txt");
         Scanner scanner = new Scanner(file);
         int i = 0;
         while (scanner.hasNextLine())

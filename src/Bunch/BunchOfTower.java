@@ -48,8 +48,7 @@ public class BunchOfTower extends Bunch{
     {
         for(int i = 0; i < bunch.size(); ++i)
         {
-            if(bunch.get(i) != null)
-                bunch.get(i).onAction(bunchOfEnemy);
+            bunch.get(i).onAction(bunchOfEnemy);
         }
     }
 

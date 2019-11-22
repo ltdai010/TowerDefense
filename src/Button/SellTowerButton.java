@@ -83,6 +83,11 @@ public class SellTowerButton extends JButton implements MouseListener {
                 && (imageLocationY > locationY && imageLocationY < locationY + sizeY))
         {
             clicked = true;
+            gameField.getUi().getBuyAntiTankTowerButton().setClicked(false);
+            gameField.getUi().getBuyMachineGunTowerButton().setClicked(false);
+            gameField.getUi().getBuyMissileTowerButton().setClicked(false);
+            gameField.getUi().getBuyNormalTowerButton().setClicked(false);
+            gameField.getUi().getBuySniperTowerButton().setClicked(false);
             return;
         }
         if(clicked == true && availableLocation(imageLocationX, imageLocationY))

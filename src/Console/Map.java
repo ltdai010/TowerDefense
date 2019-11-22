@@ -6,7 +6,6 @@ import Bunch.BunchOfGround;
 import Bunch.BunchOfMountain;
 import Bunch.BunchOfRoad;
 import Bunch.BunchOfTree;
-import Bunch.BunchOfGlass;
 import Bunch.BunchOfRock;
 import java.awt.*;
 
@@ -16,7 +15,7 @@ public class Map {
     private BunchOfGround bunchOfGround;
     private BunchOfMountain bunchOfMountain;
     private BunchOfTree bunchOfTree;
-    private BunchOfGlass bunchOfGlass;
+    private BunchOfGrass bunchOfGrass;
     private BunchOfRock bunchOfRock;
     public static final int GROUND = 0;
     public static final int ROAD = 1;
@@ -47,12 +46,12 @@ public class Map {
             }
         }
         this.mapNumber = mapNumber;
-        bunchOfMountain = new BunchOfMountain(this, mapNumber);
-        bunchOfRoad = new BunchOfRoad(this, mapNumber);
+        bunchOfMountain = new BunchOfMountain(this);
+        bunchOfRoad = new BunchOfRoad(this);
         bunchOfGround = new BunchOfGround(this);
-        bunchOfTree = new BunchOfTree(this, mapNumber);
-        bunchOfGlass = new BunchOfGlass(this, mapNumber);
-        bunchOfRock = new BunchOfRock(this, mapNumber);
+        bunchOfTree = new BunchOfTree(this);
+        bunchOfGrass = new BunchOfGrass(this);
+        bunchOfRock = new BunchOfRock(this);
     }
     public void addObject(int i, int j, int Object)
     {
@@ -79,8 +78,8 @@ public class Map {
         return bunchOfRoad;
     }
 
-    public BunchOfGlass getBunchOfGlass(){
-        return bunchOfGlass;
+    public BunchOfGrass getBunchOfGlass(){
+        return bunchOfGrass;
     }
 
     public BunchOfRock getBunchOfRock() {
@@ -97,7 +96,7 @@ public class Map {
         bunchOfMountain.draw(g);
         bunchOfRoad.draw(g);
         bunchOfTree.draw(g);
-        bunchOfGlass.draw(g);
+        bunchOfGrass.draw(g);
         bunchOfRock.draw(g);
     }
 }

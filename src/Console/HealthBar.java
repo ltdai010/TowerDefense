@@ -23,6 +23,10 @@ public class HealthBar implements GameEntity {
         loadImage();
     }
 
+    public Image getGreenBar() {
+        return greenBar;
+    }
+
     public void decreaseGreenBar(double percent)
     {
         if(maxSizeX*percent >= 1)
