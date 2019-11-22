@@ -11,6 +11,9 @@ public class Map {
     private BunchOfRoad bunchOfRoad;
     private BunchOfGround bunchOfGround;
     private BunchOfMountain bunchOfMountain;
+    private BunchOfTree bunchOfTree;
+    private BunchOfGlass bunchOfGlass;
+    private BunchOfRock bunchOfRock;
     public static final int GROUND = 0;
     public static final int ROAD = 1;
     public static final int TOWER = 2;
