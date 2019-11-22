@@ -26,7 +26,7 @@ public class BuySniperTowerButton extends BuyTowerButton {
 
     @Override
     public void loadImage() {
-        ImageIcon button = new ImageIcon("src\\img\\sniper_turret.png");
+        ImageIcon button = new ImageIcon("src\\img\\sniper-buy-button.png");
         Image image= button.getImage().getScaledInstance(sizeX, sizeY,
                 Image.SCALE_SMOOTH);
         this.buttonIcon = new ImageIcon(image);

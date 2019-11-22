@@ -23,7 +23,7 @@ public class BuyMachineGunTowerButton extends BuyTowerButton {
 
     @Override
     public void loadImage() {
-        ImageIcon button = new ImageIcon("src\\img\\machinegun_turret.png");
+        ImageIcon button = new ImageIcon("src\\img\\machinegun-buy-button.png");
         Image image= button.getImage().getScaledInstance(sizeX, sizeY,
                 Image.SCALE_SMOOTH);
         this.buttonIcon = new ImageIcon(image);

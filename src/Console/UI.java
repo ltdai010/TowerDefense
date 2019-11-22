@@ -18,7 +18,9 @@ public class UI {
     private BuyTowerButton buyMachineGunTowerButton;
     private BuyTowerButton buyMissileTowerButton;
     private SellTowerButton sellTowerButton;
-    private JButton quit;
+    private ControlButton quit;
+    private JLabel coin_icon;
+    private ImageIcon coin;
     private JTextArea information;
     private GameField gameField;
 
@@ -34,6 +36,13 @@ public class UI {
         information = new JTextArea();
         information.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
         information.setBounds(0, 520, 400, 75);
+        information.setBackground(Color.ORANGE);
+        coin = new ImageIcon("src\\img\\coins.png");
+        Image temp_coin = coin.getImage().getScaledInstance(30,30,Image.SCALE_SMOOTH);
+        coin = new ImageIcon(temp_coin);
+        coin_icon = new JLabel("", coin, JLabel.CENTER);
+        coin_icon.setBounds(960,10,30,30);
+        this.gameField.add(coin_icon);
         this.gameField.add(information);
     }
 
@@ -117,10 +126,8 @@ public class UI {
         sellTowerButton = new SellTowerButton(GameEntity.SCREENWIDTH/2 + 300, 525, gameField.getBunchOfTower(),gameField, gameField.getMap());
         gameField.add(sellTowerButton);
         gameField.addMouseListener(sellTowerButton);
-        quit = new JButton("=");
-        quit.setBackground(Color.WHITE);
-        quit.setBorder(null);
-        quit.setBounds(1100, 0, 50,50);
+        quit = new ControlButton("src\\img\\close_2.png", "src\\img\\roll-close_2.png", 40, 40);
+        quit.setBounds(1120, 10, 40, 40);
         gameField.add(quit);
         quit.addActionListener(new ActionListener() {
             @Override

@@ -24,7 +24,7 @@ public class BuyAnitiTankTowerButton extends BuyTowerButton {
 
     @Override
     public void loadImage() {
-        ImageIcon button = new ImageIcon("src\\img\\antitank_turret.png");
+        ImageIcon button = new ImageIcon("src\\img\\antitank-buy-button.png");
         Image image= button.getImage().getScaledInstance(sizeX, sizeY,
                 Image.SCALE_SMOOTH);
         this.buttonIcon = new ImageIcon(image);

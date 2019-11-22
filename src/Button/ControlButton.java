@@ -3,10 +3,10 @@ package Button;
 import javax.swing.*;
 import java.awt.*;
 
-public class ButtonImage extends JButton{
+public class ControlButton extends JButton{
     private ImageIcon image;
     private ImageIcon rollImage;
-    public ButtonImage(String imagePath, String rollImagePath, int width, int height){
+    public ControlButton(String imagePath, String rollImagePath, int width, int height){
         image = new ImageIcon(imagePath);
         Image img = image.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         image = new ImageIcon(img);

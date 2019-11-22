@@ -33,8 +33,12 @@ public abstract class BuyTowerButton extends JButton implements MouseListener {
         setBorder(null);
         loadImage();
         setIcon(buttonIcon);
-        setBounds(locationX,locationY, sizeX, sizeY);
         setVisible(true);
+        setContentAreaFilled(false);
+        setOpaque(false);
+        setBorderPainted(false);
+        setFocusPainted(false);
+        setBounds(locationX,locationY, sizeX, sizeY);
         this.map = map;
         this.gameField = gameField;
         clicked = false;
