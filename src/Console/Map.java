@@ -8,7 +8,6 @@ import Bunch.BunchOfRoad;
 import Bunch.BunchOfTree;
 import Bunch.BunchOfGlass;
 import Bunch.BunchOfRock;
->>>>>>> 6fd84431c2c47c79342a82dee15ab60549c2f20c
 import java.awt.*;
 
 public class Map {
