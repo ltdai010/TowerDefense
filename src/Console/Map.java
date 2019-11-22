@@ -1,9 +1,7 @@
 package Console;
 
-<<<<<<< HEAD
 import Bunch.*;
 
-=======
 import Bunch.BunchOfGround;
 import Bunch.BunchOfMountain;
 import Bunch.BunchOfRoad;
