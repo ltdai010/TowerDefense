@@ -78,10 +78,12 @@ public class Menu extends JFrame{
         instruction.setVisible(false);
         quit.setVisible(false);
         continued.setVisible(false);
+        back.setVisible(false);
         remove(start);
         remove(instruction);
         remove(quit);
         remove(continued);
+        remove(back);
         create.setVisible(true);
         playerName.setVisible(true);
     }
