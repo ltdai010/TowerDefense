@@ -20,9 +20,16 @@ public class BuyMachineGunTowerButton extends BuyTowerButton {
     {
         bunchOfTower.add((new MachineGunTower(imageLocationX,imageLocationY, gameField.getPlayer())));
     }
-
     @Override
     public void loadImage() {
+        ImageIcon ii = new ImageIcon("src\\img\\machinegun_turret.png");
+        Image image= ii.getImage().getScaledInstance(MachineGunTower.sizeX, MachineGunTower.sizeY,
+                Image.SCALE_SMOOTH);
+        ii = new ImageIcon(image);
+        buttonImage = ii.getImage();
+    }
+    @Override
+    public void loadImageIcon() {
         ImageIcon button = new ImageIcon("src\\img\\machinegun-buy-button.png");
         Image image= button.getImage().getScaledInstance(sizeX, sizeY,
                 Image.SCALE_SMOOTH);

@@ -23,11 +23,20 @@ public class BuyNormalTowerButton extends BuyTowerButton {
     }
 
     @Override
-    public void loadImage() {
+    public void loadImageIcon() {
         ImageIcon button = new ImageIcon("src\\img\\normal-buy-button.png");
         Image image= button.getImage().getScaledInstance(sizeX, sizeY,
                 Image.SCALE_SMOOTH);
         this.buttonIcon = new ImageIcon(image);
+    }
+
+    @Override
+    public void loadImage() {
+        ImageIcon ii = new ImageIcon("src\\img\\normal_turret.png");
+        Image image= ii.getImage().getScaledInstance(NormalTower.sizeX, NormalTower.sizeY,
+                Image.SCALE_SMOOTH);
+        ii = new ImageIcon(image);
+        buttonImage = ii.getImage();
     }
 
     @Override

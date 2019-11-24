@@ -35,7 +35,6 @@ public class Spawner implements GameTileEntity {
     private void loadScanner()
     {
         try {
-            System.out.println(mapNumber);
             scanner = new Scanner( new File("src\\stage\\" + mapNumber + ".txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -59,7 +58,6 @@ public class Spawner implements GameTileEntity {
             switch (s[0])
             {
                 case "NE":
-                    System.out.println("add");
                     bunchOfEnemy.add(new NormalEnemy(map));
                     break;
                 case "SE":

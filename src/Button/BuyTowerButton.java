@@ -4,7 +4,6 @@ import Bunch.BunchOfTower;
 import Console.Map;
 import PortableEntity.GameEntity;
 import Screen.GameField;
-import TileEntity.Tower.NormalTower;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,23 +41,15 @@ public abstract class BuyTowerButton extends JButton implements MouseListener {
         this.map = map;
         this.gameField = gameField;
         clicked = false;
-        this.loadImage();
+        loadImage();
         this.bunchOfTower = bunch;
         this.addMouseListener(this);
     }
 
-    public void toImage()
-    {
-        buttonImage = buttonIcon.getImage();
-        ImageIcon ii = new ImageIcon(buttonImage);
-        Image image= ii.getImage().getScaledInstance(50, 50,
-                Image.SCALE_SMOOTH);
-        ii = new ImageIcon(image);
-        buttonImage = ii.getImage();
-    }
+    public abstract void loadImage();
 
     public abstract void add();
-    public abstract void loadImage();
+    public abstract void loadImageIcon();
 
     public void onClickDraw(Graphics g)
     {

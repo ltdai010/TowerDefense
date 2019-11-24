@@ -5,6 +5,7 @@ import Console.Map;
 import Screen.GameField;
 import TileEntity.Tower.AntiTankTower;
 import TileEntity.Tower.NormalTower;
+import TileEntity.Tower.Tower;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,11 +24,20 @@ public class BuyAnitiTankTowerButton extends BuyTowerButton {
     }
 
     @Override
-    public void loadImage() {
+    public void loadImageIcon() {
         ImageIcon button = new ImageIcon("src\\img\\antitank-buy-button.png");
         Image image= button.getImage().getScaledInstance(sizeX, sizeY,
                 Image.SCALE_SMOOTH);
         this.buttonIcon = new ImageIcon(image);
+    }
+
+    @Override
+    public void loadImage() {
+        ImageIcon ii = new ImageIcon("src\\img\\antitank_turret.png");
+        Image image= ii.getImage().getScaledInstance(AntiTankTower.sizeX, AntiTankTower.sizeY,
+                Image.SCALE_SMOOTH);
+        ii = new ImageIcon(image);
+        buttonImage = ii.getImage();
     }
 
     @Override

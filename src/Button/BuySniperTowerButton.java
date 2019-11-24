@@ -2,9 +2,7 @@ package Button;
 
 import Bunch.BunchOfTower;
 import Console.Map;
-import PortableEntity.Bullet.SniperBullet;
 import Screen.GameField;
-import TileEntity.Tower.NormalTower;
 import TileEntity.Tower.SniperTower;
 
 import javax.swing.*;
@@ -25,11 +23,20 @@ public class BuySniperTowerButton extends BuyTowerButton {
     }
 
     @Override
-    public void loadImage() {
+    public void loadImageIcon() {
         ImageIcon button = new ImageIcon("src\\img\\sniper-buy-button.png");
         Image image= button.getImage().getScaledInstance(sizeX, sizeY,
                 Image.SCALE_SMOOTH);
         this.buttonIcon = new ImageIcon(image);
+    }
+
+    @Override
+    public void loadImage() {
+        ImageIcon ii = new ImageIcon("src\\img\\sniper_turret.png");
+        Image image= ii.getImage().getScaledInstance(SniperTower.sizeX, SniperTower.sizeY,
+                Image.SCALE_SMOOTH);
+        ii = new ImageIcon(image);
+        buttonImage = ii.getImage();
     }
 
     @Override

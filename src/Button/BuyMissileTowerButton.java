@@ -2,8 +2,10 @@ package Button;
 
 import Bunch.BunchOfTower;
 import Console.Map;
+import PortableEntity.Bullet.Missile;
 import Screen.GameField;
 import TileEntity.Tower.AntiTankTower;
+import TileEntity.Tower.MachineGunTower;
 import TileEntity.Tower.MissileTower;
 
 import javax.swing.*;
@@ -22,7 +24,7 @@ public class BuyMissileTowerButton extends BuyTowerButton {
     }
 
     @Override
-    public void loadImage() {
+    public void loadImageIcon() {
         ImageIcon button = new ImageIcon("src\\img\\missile-buy-button.png");
         Image image= button.getImage().getScaledInstance(sizeX, sizeY,
                 Image.SCALE_SMOOTH);
@@ -38,6 +40,15 @@ public class BuyMissileTowerButton extends BuyTowerButton {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void loadImage() {
+        ImageIcon ii = new ImageIcon("src\\img\\missile_turret.png");
+        Image image= ii.getImage().getScaledInstance(MissileTower.sizeX, MissileTower.sizeY,
+                Image.SCALE_SMOOTH);
+        ii = new ImageIcon(image);
+        buttonImage = ii.getImage();
     }
 
     @Override
