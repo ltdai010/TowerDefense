@@ -31,7 +31,7 @@ public abstract class BuyTowerButton extends JButton implements MouseListener {
         this.locationY = locationY;
         setBackground(null);
         setBorder(null);
-        loadImage();
+        loadImageIcon();
         setIcon(buttonIcon);
         setVisible(true);
         setContentAreaFilled(false);
@@ -42,7 +42,7 @@ public abstract class BuyTowerButton extends JButton implements MouseListener {
         this.map = map;
         this.gameField = gameField;
         clicked = false;
-        toImage();
+        this.loadImage();
         this.bunchOfTower = bunch;
         this.addMouseListener(this);
     }
