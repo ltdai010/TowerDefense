@@ -45,11 +45,7 @@ public class NormalTower extends Tower {
             clip.open(audioInputStream);
             floatControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             floatControl.setValue((float)(floatControl.getMinimum() + (floatControl.getMaximum() - floatControl.getMinimum())/1.5));
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }

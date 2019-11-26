@@ -7,6 +7,7 @@ import PortableEntity.Bullet.SniperBullet;
 import PortableEntity.Enemy.Enemy;
 
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class SniperTower extends Tower {
     public static final int RANGE = 400;
     public static final int fireRate = 1000;
     public static final int bulletSpeedRate = 2;
+    private FloatControl floatControl;
     public SniperTower(int locationX, int locationY, Player player) {
         super(locationX, locationY, player);
         loadImage();
@@ -44,11 +46,9 @@ public class SniperTower extends Tower {
             audioInputStream = AudioSystem.getAudioInputStream(new File("src\\audio\\Springfield.wav"));
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
+            floatControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            floatControl.setValue((float)(floatControl.getMinimum() + (floatControl.getMaximum() - floatControl.getMinimum())/1.5));
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
@@ -56,7 +56,7 @@ public class SniperTower extends Tower {
     @Override
     public void onAction(BunchOfEnemy bunch)
     {
-        if(currentEnemy != null && inRange(currentEnemy) != true)
+        if(currentEnemy != null && !inRange(currentEnemy))
         {
             bunchOfBullet.removeAll();
         }
