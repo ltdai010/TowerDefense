@@ -24,11 +24,12 @@ public class Menu extends JFrame{
     private ControlButton male_button;
     private AudioInputStream menu_audio;
     private Clip clip;
-    private JButton create;
+    private ControlButton create;
     private ImageIcon background;
     private JLabel back;
     private JLabel warning;
-    private TextField playerName;
+    private JLabel playerNameArea;
+    private JTextField playerName;
     private final int sizeX = 1206;
     private final int sizeY = 630;
     public Menu()
@@ -40,14 +41,25 @@ public class Menu extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
-        playerName = new TextField();
-        playerName.setBounds(500, 450, 200,50);
-        playerName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
+        ImageIcon icon = new ImageIcon("src\\img\\character-name-area.png");
+        int icon_width = icon.getIconWidth();
+        int icon_length = icon.getIconHeight();
+        playerName = new JTextField();
+        playerName.setOpaque(false);
+        playerName.setBounds(440, 290, icon_width / 4,icon_length / 4);
+        playerName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+        Image img = icon.getImage().getScaledInstance(icon_width / 2, icon_length / 2, Image.SCALE_SMOOTH);
+        icon = new ImageIcon(img);
+        playerNameArea = new JLabel("",icon,JLabel.CENTER);
+        playerNameArea.setLayout(new BorderLayout());
+        playerNameArea.add(playerName);
+        playerNameArea.setBounds(440, 290, icon_width / 2, icon_length / 2);
+        playerName.setBorder(null);
         warning = new JLabel("Please enter your nickname!");
         warning.setFont(new Font(Font.DIALOG, Font.ITALIC, 16));
         warning.setBounds(500, 500, 300, 30);
         warning.setForeground(Color.RED);
-        loadBackground();
+        loadBackground("src\\img\\background.png");
         initButton();
         initAudio();
         back = new JLabel("",background, JLabel.CENTER);
@@ -92,8 +104,8 @@ public class Menu extends JFrame{
         quit = new ControlButton("src\\img\\close.png", "src\\img\\roll-close.png", 50, 50);
         add(quit);
         quit.setBounds(1120, 10, 50, 50);
-        create = new JButton("Create");
-        create.setBounds(720, 450, 100, 50);
+        create = new ControlButton("src\\img\\creat_button.png", "src\\img\\roll-creat_button.png",120, 50);
+        create.setBounds(520, 340, 120, 50);
         start.addActionListener(e -> startAction());
         quit.addActionListener(e -> quitAction());
         instruction.addActionListener(e -> instructionAction());
@@ -117,10 +129,14 @@ public class Menu extends JFrame{
 //        this.add(male_button);
         this.add(warning);
         this.add(create);
-        this.add(playerName);
+        this.add(playerNameArea);
         warning.setVisible(false);
         create.setVisible(true);
-        playerName.setVisible(true);
+        playerNameArea.setVisible(true);
+        loadBackground("src\\img\\after_menu_background.png");
+        back = new JLabel("",background, JLabel.CENTER);
+        back.setBounds(0,0, sizeX, sizeY);
+        add(back);
     }
 
     private void continueAction()
@@ -177,8 +193,8 @@ public class Menu extends JFrame{
     {
 
     }
-    public void loadBackground(){
-        background = new ImageIcon("src\\img\\background.png");
+    public void loadBackground(String path){
+        background = new ImageIcon(path);
         Image image = background.getImage().getScaledInstance(sizeX, sizeY, Image.SCALE_SMOOTH);
         background = new ImageIcon(image);
     }
