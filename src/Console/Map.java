@@ -7,6 +7,7 @@ import Bunch.BunchOfMountain;
 import Bunch.BunchOfRoad;
 import Bunch.BunchOfTree;
 import Bunch.BunchOfRock;
+import Bunch.BunchOfGrass;
 import java.awt.*;
 
 public class Map {
