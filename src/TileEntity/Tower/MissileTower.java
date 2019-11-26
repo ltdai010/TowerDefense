@@ -5,8 +5,13 @@ import Console.Player;
 import PortableEntity.Bullet.Missile;
 import PortableEntity.Enemy.Enemy;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class MissileTower extends Tower {
     public static final int price = 300;
@@ -18,6 +23,7 @@ public class MissileTower extends Tower {
     public MissileTower(int locationX, int locationY, Player player) {
         super(locationX, locationY, player);
         loadImage();
+        loadAudio();
     }
 
     @Override
@@ -29,6 +35,21 @@ public class MissileTower extends Tower {
         ii=new ImageIcon(image);
         turret = ii.getImage();
         rotatedTurret = ii.getImage();
+    }
+
+    @Override
+    public void loadAudio() {
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(new File("src\\audio\\Panzerfaust.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -75,6 +96,9 @@ public class MissileTower extends Tower {
 
     @Override
     public void fireBullet(Enemy enemy) {
+        clip.stop();
+        clip.setMicrosecondPosition(0);
+        clip.start();
         bunchOfBullet.add(new Missile(locationX + sizeX/2, locationY + sizeY/2, checkAngle(enemy)));
     }
 

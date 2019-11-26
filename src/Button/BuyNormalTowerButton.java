@@ -44,6 +44,7 @@ public class BuyNormalTowerButton extends BuyTowerButton {
     {
         if(gameField.getPlayer().getScore() >= NormalTower.price)
         {
+            map.addObject(imageLocationY/50, imageLocationX/50, Map.TOWER);
             gameField.getPlayer().addScore(-NormalTower.price);
             return true;
         }

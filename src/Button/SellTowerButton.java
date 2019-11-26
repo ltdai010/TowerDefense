@@ -114,6 +114,7 @@ public class SellTowerButton extends JButton implements MouseListener {
                     && bunchOfTower.getBunch().get(i).getLocationY() == imageLocationY)
             {
                 gameField.getPlayer().addScore(bunchOfTower.getBunch().get(i).getPrice()/2);
+                map.addObject(bunchOfTower.getBunch().get(i).getLocationY()/50, bunchOfTower.getBunch().get(i).getLocationX()/50, Map.MOUNTAIN);
                 bunchOfTower.getBunch().remove(i);
             }
         }

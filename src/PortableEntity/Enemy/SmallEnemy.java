@@ -13,7 +13,7 @@ public class SmallEnemy extends Enemy {
     private static final double defaultArmor = 1;
     private static final int sizeX = 50;
     private static final int sizeY = 50;
-    private static final int prize = 15;
+    private static final int prize = 20;
 
     public SmallEnemy( Map map) {
         super(map);

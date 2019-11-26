@@ -127,7 +127,6 @@ public abstract class BuyTowerButton extends JButton implements MouseListener {
     {
         if(map.getObject(imageLocationY/50, imageLocationX/50) == Map.MOUNTAIN)
         {
-            map.addObject(imageLocationY/50, imageLocationX/50, Map.TOWER);
             return true;
         }
         return false;

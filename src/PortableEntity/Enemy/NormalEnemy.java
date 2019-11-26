@@ -12,7 +12,7 @@ public class NormalEnemy extends Enemy {
     private static final double defaultArmor = 1;
     private static final int sizeX = 60;
     private static final int sizeY = 60;
-    private static final int prize = 10;
+    private static final int prize = 15;
 
     public NormalEnemy(Map map) {
         super(map);

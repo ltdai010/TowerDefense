@@ -11,10 +11,13 @@ import PortableEntity.GameEntity;
 import Button.*;
 import TileEntity.Tower.*;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class GameField extends JPanel implements Runnable{
@@ -24,6 +27,8 @@ public class GameField extends JPanel implements Runnable{
     private Thread animator;
     private Map map;
     private GameStage gameStage;
+    private AudioInputStream audioInputStream;
+    private Clip clip;
     private UI ui;
     private int stage;
     private boolean pause;
@@ -32,12 +37,14 @@ public class GameField extends JPanel implements Runnable{
     public GameField(Player player, GameStage gameStage, int operation) {
         this.player = player;
         player.setGameField(this);
-        player.addScoreText();
+        this.add(player.getScoreText());
+        this.add(player.getName_label());
+        this.add(player.getAddScore_label());
         pause = false;
         this.gameStage = gameStage;
         if(operation == NEW)
         {
-            player.addScore(10000);
+            player.setScore(100);
             stage = 1;
         }
         else
@@ -48,9 +55,23 @@ public class GameField extends JPanel implements Runnable{
                 e.printStackTrace();
             }
         }
-        initBoard();
+        try {
+            initBoard();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
         ui = new UI(this);
+        this.getUi().getStage_label().setText("Stage " + stage);
     }
+
+    public int getStage() {
+        return stage;
+    }
+
 
     private void readFile() throws FileNotFoundException {
         FileReader fileReader = new FileReader("src\\save\\game\\player.txt");
@@ -113,33 +134,13 @@ public class GameField extends JPanel implements Runnable{
         return player;
     }
 
-    private void initBoard() {
+    private void initBoard() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         setLayout(null);
         setBounds(0,0, GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT);
         setBackground(Color.WHITE);
-        if(stage == 1)
-        {
-            map = new Map(Map.MAP1);
-        }
-        else if(stage == 2)
-        {
-            map = new Map(Map.MAP2);
-        }
-        else if(stage == 3)
-        {
-            map = new Map(Map.MAP3);
-        }
-        else if(stage == 4)
-        {
-            map = new Map(Map.MAP4);
-        }
-        else if(stage == 5)
-        {
-            map = new Map(Map.MAP5);
-        }
         bunchOfTower = new BunchOfTower();
         bunchOfEnemy = new BunchOfEnemy();
-        map.getBunchOfRoad().getStartPoint().setBunchOfEnemy(bunchOfEnemy);
+        loadStage();
         setPreferredSize(new Dimension(GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT));
     }
 
@@ -169,6 +170,14 @@ public class GameField extends JPanel implements Runnable{
         return bunchOfTower;
     }
 
+    public Clip getClip() {
+        return clip;
+    }
+
+    public AudioInputStream getAudioInputStream() {
+        return audioInputStream;
+    }
+
     public void draw(Graphics g)
     {
         map.draw(g);
@@ -187,7 +196,6 @@ public class GameField extends JPanel implements Runnable{
     public void run() {
         bunchOfEnemy.setSleepTime(System.currentTimeMillis());
         bunchOfTower.setSleepTime(System.currentTimeMillis());
-        map.getBunchOfRoad().getStartPoint().setStartTime(System.currentTimeMillis());
         while (true)
         {
             if(!pause)
@@ -195,13 +203,30 @@ public class GameField extends JPanel implements Runnable{
                 ui.setInformationText();
                 bunchOfEnemy.onAction();
                 bunchOfTower.onAction(bunchOfEnemy);
-                if(stage < 3 && !map.getBunchOfRoad().getStartPoint().spawnEnemy())
+                player.addScoreAnimate();
+                if(!map.getBunchOfRoad().getStartPoint().spawnEnemy())
                 {
                     if(bunchOfEnemy.getBunch().size() == 0)
                     {
                         map.getBunchOfRoad().getStartPoint().getScanner().close();
-                        loadStage();
-                        ++stage;
+                        if(stage < 5)
+                        {
+                            ++stage;
+                            remove(this.map.getBunchOfRoad().getTarget().getHP_label());
+                            this.getUi().getStage_label().setText("Stage " + stage);
+                            try {
+                                audioInputStream.close();
+                                clip.stop();
+                                clip.close();
+                                loadStage();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (UnsupportedAudioFileException e) {
+                                e.printStackTrace();
+                            } catch (LineUnavailableException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 }
                 repaint();
@@ -214,8 +239,7 @@ public class GameField extends JPanel implements Runnable{
         }
     }
 
-    public void loadStage()
-    {
+    public void loadStage() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         if(stage == 1)
         {
             map = new Map(Map.MAP1);
@@ -223,8 +247,6 @@ public class GameField extends JPanel implements Runnable{
         else if(stage == 2)
         {
             map = new Map(Map.MAP2);
-            map.getBunchOfRoad().getStartPoint().setBunchOfEnemy(bunchOfEnemy);
-            map.getBunchOfRoad().getStartPoint().setStartTime(System.currentTimeMillis());
         }
         else if(stage == 3)
         {
@@ -238,6 +260,13 @@ public class GameField extends JPanel implements Runnable{
         {
             map = new Map(Map.MAP5);
         }
+        audioInputStream = AudioSystem.getAudioInputStream(new File("src\\audio\\stage" + stage + ".wav"));
+        clip = AudioSystem.getClip();
+        clip.open(audioInputStream);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        clip.start();
+        this.add(map.getBunchOfRoad().getTarget().getHP_label());
+        map.getBunchOfRoad().getStartPoint().setStartTime(System.currentTimeMillis());
         map.getBunchOfRoad().getStartPoint().setBunchOfEnemy(bunchOfEnemy);
     }
 

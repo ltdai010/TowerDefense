@@ -39,9 +39,10 @@ public class BuyMachineGunTowerButton extends BuyTowerButton {
     @Override
     public boolean enoughMoney()
     {
-        if(gameField.getPlayer().getScore() >= MissileTower.price)
+        if(gameField.getPlayer().getScore() >= MachineGunTower.price)
         {
-            gameField.getPlayer().addScore(-MissileTower.price);
+            map.addObject(imageLocationY/50, imageLocationX/50, Map.TOWER);
+            gameField.getPlayer().addScore(-MachineGunTower.price);
             return true;
         }
         return false;
