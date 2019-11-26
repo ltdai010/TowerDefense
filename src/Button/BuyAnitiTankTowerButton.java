@@ -45,6 +45,7 @@ public class BuyAnitiTankTowerButton extends BuyTowerButton {
     {
         if(gameField.getPlayer().getScore() >= AntiTankTower.price)
         {
+            map.addObject(imageLocationY/50, imageLocationX/50, Map.TOWER);
             gameField.getPlayer().addScore(-AntiTankTower.price);
             return true;
         }

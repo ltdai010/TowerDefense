@@ -3,6 +3,7 @@ package Console;
 import Screen.GameField;
 import Screen.GameStage;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -19,17 +20,17 @@ public class Menu extends JFrame{
     private ControlButton start;
     private ControlButton instruction;
     private ControlButton quit;
+    private ControlButton female_button;
+    private ControlButton male_button;
+    private AudioInputStream menu_audio;
+    private Clip clip;
     private JButton create;
     private ImageIcon background;
     private JLabel back;
+    private JLabel warning;
     private TextField playerName;
     private final int sizeX = 1206;
     private final int sizeY = 630;
-    private static final int STAGE1 = 1;
-    private static final int STAGE2 = 2;
-    private static final int STAGE3 = 3;
-    private static final int STAGE4 = 4;
-    private static final int STAGE5 = 5;
     public Menu()
     {
         pack();
@@ -39,6 +40,46 @@ public class Menu extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
+        playerName = new TextField();
+        playerName.setBounds(500, 450, 200,50);
+        playerName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
+        warning = new JLabel("Please enter your nickname!");
+        warning.setFont(new Font(Font.DIALOG, Font.ITALIC, 16));
+        warning.setBounds(500, 500, 300, 30);
+        warning.setForeground(Color.RED);
+        loadBackground();
+        initButton();
+        initAudio();
+        back = new JLabel("",background, JLabel.CENTER);
+        back.setBounds(0,0, sizeX, sizeY);
+        add(back);
+        setIconImage(new ImageIcon("src\\img\\game-icon.png").getImage());
+        setTitle("Tower Defense Game");
+    }
+
+    private void initAudio() {
+        try {
+            menu_audio = AudioSystem.getAudioInputStream(new File("src\\audio\\menu.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(menu_audio);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void initButton()
+    {
+//        female_button = new ControlButton(, 300, 300);
+//        male_button = new ControlButton(, 300, 300);
+//        female_button.setBounds(0, 450, 300, 300);
+//        male_button.setBounds(600, 450, 300, 300);
         continued = new ControlButton("src\\img\\continued.png", "src\\img\\roll-continued.png", 100, 100);
         add(continued);
         continued.setBounds(400, 440, 100, 100);
@@ -52,24 +93,7 @@ public class Menu extends JFrame{
         add(quit);
         quit.setBounds(1120, 10, 50, 50);
         create = new JButton("Create");
-        create.setBounds(720, 400, 100, 50);
-        this.add(create);
-        create.setVisible(false);
-        playerName = new TextField();
-        playerName.setBounds(500, 400, 200,50);
-        playerName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
-        this.add(playerName);
-        playerName.setVisible(false);
-        loadBackground();
-        back = new JLabel("",background, JLabel.CENTER);
-        back.setBounds(0,0, sizeX, sizeY);
-        add(back);
-        setIconImage(new ImageIcon("src\\img\\game-icon.png").getImage());
-        setTitle("Tower Defense Game");
-        initButton();
-    }
-    private void initButton()
-    {
+        create.setBounds(720, 450, 100, 50);
         start.addActionListener(e -> startAction());
         quit.addActionListener(e -> quitAction());
         instruction.addActionListener(e -> instructionAction());
@@ -89,6 +113,12 @@ public class Menu extends JFrame{
         remove(quit);
         remove(continued);
         remove(back);
+//        this.add(female_button);
+//        this.add(male_button);
+        this.add(warning);
+        this.add(create);
+        this.add(playerName);
+        warning.setVisible(false);
         create.setVisible(true);
         playerName.setVisible(true);
     }
@@ -101,9 +131,12 @@ public class Menu extends JFrame{
             try {
                 FileReader fileReader = new FileReader(file);
                 Scanner scanner = new Scanner(fileReader);
-                Player player = new Player(scanner.nextLine());
+                Player player = new Player(scanner.nextLine(), Player.MALE_CHARACTER);
                 player.setScore(scanner.nextInt());
                 fileReader.close();
+                clip.stop();
+                menu_audio.close();
+                clip.close();
                 GameStage gameStage = new GameStage(sizeX, sizeY, player, GameField.CONTINUE);
                 this.setVisible(false);
                 this.dispose();
@@ -117,7 +150,19 @@ public class Menu extends JFrame{
 
     private void createAction()
     {
-        Player player = new Player(playerName.getText());
+        if(playerName.getText().equals(""))
+        {
+            warning.setVisible(true);
+            return;
+        }
+        Player player = new Player(playerName.getText(), Player.MALE_CHARACTER);
+        clip.stop();
+        try {
+            menu_audio.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clip.close();
         GameStage gameStage = new GameStage(sizeX, sizeY, player, GameField.NEW);
         this.setVisible(false);
         this.dispose();

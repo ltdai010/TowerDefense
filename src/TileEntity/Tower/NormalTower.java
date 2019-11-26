@@ -5,9 +5,13 @@ import Console.Player;
 import PortableEntity.Bullet.Bullet;
 import PortableEntity.Bullet.NormalBullet;
 import PortableEntity.Enemy.Enemy;
+import com.sun.media.jfxmedia.control.VideoFormat;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class NormalTower extends Tower {
     public static final int price = 30;
@@ -16,9 +20,11 @@ public class NormalTower extends Tower {
     public static final int RANGE = 200;
     public static final int fireRate = 500;
     public static final int bulletSpeedRate = 2;
+    private FloatControl floatControl;
     public NormalTower(int locationX, int locationY, Player player) {
         super(locationX, locationY, player);
         loadImage();
+        loadAudio();
     }
     @Override
     public void loadImage()
@@ -29,6 +35,23 @@ public class NormalTower extends Tower {
         ii=new ImageIcon(image);
         turret = ii.getImage();
         rotatedTurret = ii.getImage();
+    }
+
+    @Override
+    public void loadAudio() {
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(new File("src\\audio\\Garand.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            floatControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            floatControl.setValue((float)(floatControl.getMinimum() + (floatControl.getMaximum() - floatControl.getMinimum())/1.5));
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -75,6 +98,9 @@ public class NormalTower extends Tower {
 
     @Override
     public void fireBullet(Enemy enemy) {
+        clip.stop();
+        clip.setMicrosecondPosition(0);
+        clip.start();
         bunchOfBullet.add(new NormalBullet(locationX + sizeX/2, locationY + sizeY/2, checkAngle(enemy)));
     }
 

@@ -6,8 +6,13 @@ import PortableEntity.Bullet.AntiTankBullet;
 import PortableEntity.Bullet.SniperBullet;
 import PortableEntity.Enemy.Enemy;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class AntiTankTower extends Tower {
 
@@ -20,6 +25,7 @@ public class AntiTankTower extends Tower {
     public AntiTankTower(int locationX, int locationY, Player player) {
         super(locationX, locationY, player);
         loadImage();
+        loadAudio();
     }
 
     @Override
@@ -31,6 +37,21 @@ public class AntiTankTower extends Tower {
         ii=new ImageIcon(image);
         turret = ii.getImage();
         rotatedTurret = ii.getImage();
+    }
+
+    @Override
+    public void loadAudio() {
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(new File("src\\audio\\FlaK_88.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -77,6 +98,9 @@ public class AntiTankTower extends Tower {
 
     @Override
     public void fireBullet(Enemy enemy) {
+        clip.stop();
+        clip.setMicrosecondPosition(0);
+        clip.start();
         bunchOfBullet.add(new AntiTankBullet(locationX + sizeX/2, locationY + sizeY/2, checkAngle(enemy)));
     }
 

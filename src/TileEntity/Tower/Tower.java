@@ -7,11 +7,15 @@ import PortableEntity.Bullet.Bullet;
 import PortableEntity.Enemy.Enemy;
 import TileEntity.GameTileEntity;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
 import java.awt.*;
 
 public abstract class Tower implements GameTileEntity {
     protected Image turret;
     protected Image rotatedTurret;
+    protected AudioInputStream audioInputStream;
+    protected Clip clip;
     protected int locationX;
     protected int locationY;
     protected long sleepFire;
@@ -65,6 +69,8 @@ public abstract class Tower implements GameTileEntity {
     public BunchOfBullet getBunchOfBullet() {
         return bunchOfBullet;
     }
+
+    public abstract void loadAudio();
 
     public abstract void onAction(BunchOfEnemy bunch);
 

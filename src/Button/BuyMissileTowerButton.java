@@ -36,6 +36,7 @@ public class BuyMissileTowerButton extends BuyTowerButton {
     {
         if(gameField.getPlayer().getScore() >= MissileTower.price)
         {
+            map.addObject(imageLocationY/50, imageLocationX/50, Map.TOWER);
             gameField.getPlayer().addScore(-MissileTower.price);
             return true;
         }

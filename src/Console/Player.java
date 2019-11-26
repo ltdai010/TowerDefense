@@ -2,6 +2,7 @@ package Console;
 
 import PortableEntity.Enemy.Enemy;
 import Screen.GameField;
+import TileEntity.Tower.MachineGunTower;
 import TileEntity.Tower.Tower;
 
 import javax.swing.*;
@@ -12,12 +13,28 @@ public class Player{
     private int score = 0;
     private String name;
     private JLabel scoreText;
+    private JLabel addScore_label;
+    private long start;
+    private JLabel name_label;
     private GameField gameField;
     private File file;
+    private ImageIcon characterIcon;
+    public static final String FEMALE_CHARACTER = "female_character";
+    public static final String MALE_CHARACTER = "male_character";
     private int stage;
-    public Player(String name)
+    public Player(String name, String character)
     {
         this.name = name;
+        this.name_label = new JLabel(name);
+        addScore_label = new JLabel();
+        addScore_label.setBounds(1000, 50, 100, 50);
+        addScore_label.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
+        name_label.setFont(new Font(Font.MONOSPACED, Font.BOLD, 32));
+        name_label.setBounds(20,0, 200, 50);
+        scoreText = new JLabel(Integer.toString(score));
+        scoreText.setBounds(1000, 0, 100, 50);
+        scoreText.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
+        start = System.currentTimeMillis();
     }
 
     public void setGameField(GameField gameField) {
@@ -26,14 +43,19 @@ public class Player{
 
     public void setScore(int score) {
         this.score = score;
+        scoreText.setText(Integer.toString(score));
     }
 
-    public void addScoreText()
-    {
-        scoreText = new JLabel(Integer.toString(score));
-        scoreText.setBounds(1000, 0, 100, 50);
-        scoreText.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
-        gameField.add(scoreText);
+    public JLabel getScoreText() {
+        return scoreText;
+    }
+
+    public JLabel getName_label() {
+        return name_label;
+    }
+
+    public JLabel getAddScore_label() {
+        return addScore_label;
     }
 
     public void setStage(int stage) {
@@ -91,6 +113,14 @@ public class Player{
         }
     }
 
+    public void addScoreAnimate()
+    {
+        if(System.currentTimeMillis() > start + 1000)
+        {
+            addScore_label.setText("");
+        }
+    }
+
 
     public String getName() {
         return name;
@@ -98,6 +128,11 @@ public class Player{
 
     public void addScore(int score) {
         this.score += score;
+        start = System.currentTimeMillis();
+        if(score > 0)
+            addScore_label.setText("+" + score);
+        else
+            addScore_label.setText(Integer.toString(score));
         scoreText.setText(Integer.toString(this.score));
     }
 

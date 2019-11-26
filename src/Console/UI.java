@@ -4,6 +4,7 @@ import Button.*;
 import PortableEntity.Bullet.*;
 import PortableEntity.GameEntity;
 import Screen.GameField;
+import TileEntity.Target;
 import TileEntity.Tower.*;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class UI {
     private SellTowerButton sellTowerButton;
     private ControlButton quit;
     private JLabel coin_icon;
+    private JLabel stage_label;
     private ImageIcon coin;
     private JTextArea information;
     private GameField gameField;
@@ -33,6 +35,9 @@ public class UI {
     private void initUI()
     {
         initButton();
+        stage_label = new JLabel("Stage " + gameField.getStage());
+        stage_label.setBounds(20,50, 200, 50);
+        stage_label.setFont(new Font(Font.MONOSPACED, Font.BOLD, 26));
         information = new JTextArea();
         information.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
         information.setBounds(0, 520, 400, 75);
@@ -42,12 +47,17 @@ public class UI {
         coin = new ImageIcon(temp_coin);
         coin_icon = new JLabel("", coin, JLabel.CENTER);
         coin_icon.setBounds(960,10,30,30);
+        gameField.add(stage_label);
         this.gameField.add(coin_icon);
         this.gameField.add(information);
     }
 
     public JTextArea getInformation() {
         return information;
+    }
+
+    public JLabel getStage_label() {
+        return stage_label;
     }
 
     public void setInformationText()
@@ -108,11 +118,11 @@ public class UI {
 
     private void initButton()
     {
-        buyNormalTowerButton = new BuyNormalTowerButton(GameEntity.SCREENWIDTH/2 - 200,515, gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buySniperTowerButton = new BuySniperTowerButton(GameEntity.SCREENWIDTH/2 - 100,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buyAntiTankTowerButton = new BuyAnitiTankTowerButton(GameEntity.SCREENWIDTH/2 ,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buyMachineGunTowerButton = new BuyMachineGunTowerButton(GameEntity.SCREENWIDTH/2 + 100,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buyMissileTowerButton = new BuyMissileTowerButton(GameEntity.SCREENWIDTH/2 + 200,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyNormalTowerButton = new BuyNormalTowerButton(GameEntity.SCREENWIDTH - 500 - 10 - Target.HB_width,515, gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buySniperTowerButton = new BuySniperTowerButton(GameEntity.SCREENWIDTH - 400 - 10 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyAntiTankTowerButton = new BuyAnitiTankTowerButton(GameEntity.SCREENWIDTH - 300 - 10 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyMachineGunTowerButton = new BuyMachineGunTowerButton(GameEntity.SCREENWIDTH - 200 - 10 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyMissileTowerButton = new BuyMissileTowerButton(GameEntity.SCREENWIDTH + -100 - 10 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
         gameField.add(buyNormalTowerButton);
         gameField.add(buySniperTowerButton);
         gameField.add(buyAntiTankTowerButton);
@@ -123,7 +133,7 @@ public class UI {
         gameField.addMouseListener(buyAntiTankTowerButton);
         gameField.addMouseListener(buyMachineGunTowerButton);
         gameField.addMouseListener(buyMissileTowerButton);
-        sellTowerButton = new SellTowerButton(GameEntity.SCREENWIDTH/2 + 300, 525, gameField.getBunchOfTower(),gameField, gameField.getMap());
+        sellTowerButton = new SellTowerButton(GameEntity.SCREENWIDTH - 10 - Target.HB_width, 515, gameField.getBunchOfTower(),gameField, gameField.getMap());
         gameField.add(sellTowerButton);
         gameField.addMouseListener(sellTowerButton);
         quit = new ControlButton("src\\img\\close_2.png", "src\\img\\roll-close_2.png", 40, 40);
@@ -137,6 +147,8 @@ public class UI {
                 if(click == JOptionPane.YES_OPTION)
                 {
                     Menu menu = new Menu();
+                    gameField.getClip().stop();
+                    gameField.getClip().close();
                     gameField.getPlayer().saveGame();
                     gameField.getGameStage().setVisible(false);
                     gameField.getGameStage().dispose();
@@ -144,6 +156,8 @@ public class UI {
                 if(click == JOptionPane.NO_OPTION)
                 {
                     Menu menu = new Menu();
+                    gameField.getClip().stop();
+                    gameField.getClip().close();
                     gameField.getPlayer().saveScore();
                     gameField.getGameStage().setVisible(false);
                     gameField.getGameStage().dispose();

@@ -19,7 +19,7 @@ public class Spawner implements GameTileEntity {
     private int wave;
     private long startTime;
     private Map map;
-    private String type;
+    private long waveWait;
     private int sleepTime;
     private Scanner scanner;
     public Spawner(int locationX, int locationY, Map map) {
@@ -30,6 +30,7 @@ public class Spawner implements GameTileEntity {
         wave = 1;
         loadScanner();
         startTime = System.currentTimeMillis();
+        waveWait = System.currentTimeMillis();
     }
 
     private void loadScanner()
@@ -47,11 +48,12 @@ public class Spawner implements GameTileEntity {
 
     private boolean loadSpawn()
     {
-        if(System.currentTimeMillis() > startTime + sleepTime)
+        if(System.currentTimeMillis() > startTime + sleepTime && System.currentTimeMillis() > waveWait + 10000)
         {
             String line = scanner.nextLine();
             if(line.equals("end"))
             {
+                waveWait = System.currentTimeMillis();
                 return false;
             }
             String[] s = line.split(" ");
