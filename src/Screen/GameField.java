@@ -40,6 +40,7 @@ public class GameField extends JPanel implements Runnable{
         this.add(player.getScoreText());
         this.add(player.getName_label());
         this.add(player.getAddScore_label());
+        this.add(player.getAvatar());
         pause = false;
         this.gameStage = gameStage;
         if(operation == NEW)
@@ -212,6 +213,8 @@ public class GameField extends JPanel implements Runnable{
                         if(stage < 5)
                         {
                             ++stage;
+                            player.setStage(stage);
+                            player.saveGame();
                             remove(this.map.getBunchOfRoad().getTarget().getHP_label());
                             this.getUi().getStage_label().setText("Stage " + stage);
                             try {

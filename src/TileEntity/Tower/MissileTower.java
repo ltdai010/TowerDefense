@@ -6,6 +6,7 @@ import PortableEntity.Bullet.Missile;
 import PortableEntity.Enemy.Enemy;
 
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -20,6 +21,8 @@ public class MissileTower extends Tower {
     public static final int RANGE = 500;
     public static final int fireRate = 2000;
     public static final int bulletSpeedRate = 2;
+    private FloatControl floatControl;
+
     public MissileTower(int locationX, int locationY, Player player) {
         super(locationX, locationY, player);
         loadImage();
@@ -43,11 +46,9 @@ public class MissileTower extends Tower {
             audioInputStream = AudioSystem.getAudioInputStream(new File("src\\audio\\Panzerfaust.wav"));
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
+            floatControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            floatControl.setValue((float)(floatControl.getMinimum() + (floatControl.getMaximum() - floatControl.getMinimum())/1.2));
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }

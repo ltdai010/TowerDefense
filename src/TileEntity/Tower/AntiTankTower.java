@@ -3,10 +3,10 @@ package TileEntity.Tower;
 import Bunch.BunchOfEnemy;
 import Console.Player;
 import PortableEntity.Bullet.AntiTankBullet;
-import PortableEntity.Bullet.SniperBullet;
 import PortableEntity.Enemy.Enemy;
 
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -22,6 +22,8 @@ public class AntiTankTower extends Tower {
     public static final int RANGE = 300;
     public static final int fireRate = 1500;
     public static final int bulletSpeedRate = 2;
+    private FloatControl floatControl;
+
     public AntiTankTower(int locationX, int locationY, Player player) {
         super(locationX, locationY, player);
         loadImage();
@@ -45,6 +47,8 @@ public class AntiTankTower extends Tower {
             audioInputStream = AudioSystem.getAudioInputStream(new File("src\\audio\\FlaK_88.wav"));
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
+            floatControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            floatControl.setValue((float)(floatControl.getMinimum() + (floatControl.getMaximum() - floatControl.getMinimum())/1.2));
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -17,11 +17,7 @@ public class ControlButton extends JButton{
         loadImage(imagePath, rollImagePath, width, height);
         try {
             loadAudio();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
             e.printStackTrace();
         }
         addActionListener(e -> {
@@ -52,6 +48,18 @@ public class ControlButton extends JButton{
         setFocusPainted(false);
         setRolloverIcon(rollImage);
         setRolloverEnabled(true);
+    }
+
+    public void checked()
+    {
+        this.setRolloverEnabled(false);
+        this.setIcon(rollImage);
+    }
+
+    public void unchecked()
+    {
+        this.setIcon(image);
+        this.setRolloverEnabled(true);
     }
 
     public ImageIcon getImage() {

@@ -29,6 +29,7 @@ public class Menu extends JFrame{
     private JLabel back;
     private JLabel warning;
     private TextField playerName;
+    private String character;
     private final int sizeX = 1206;
     private final int sizeY = 630;
     public Menu()
@@ -43,9 +44,9 @@ public class Menu extends JFrame{
         playerName = new TextField();
         playerName.setBounds(500, 450, 200,50);
         playerName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
-        warning = new JLabel("Please enter your nickname!");
+        warning = new JLabel("Please enter your nickname and choose a character!");
         warning.setFont(new Font(Font.DIALOG, Font.ITALIC, 16));
-        warning.setBounds(500, 500, 300, 30);
+        warning.setBounds(500, 500, 500, 30);
         warning.setForeground(Color.RED);
         loadBackground();
         initButton();
@@ -76,10 +77,10 @@ public class Menu extends JFrame{
 
     private void initButton()
     {
-//        female_button = new ControlButton(, 300, 300);
-//        male_button = new ControlButton(, 300, 300);
-//        female_button.setBounds(0, 450, 300, 300);
-//        male_button.setBounds(600, 450, 300, 300);
+        female_button = new ControlButton("src\\img\\female-character.png", "src\\img\\roll-female-character.png", 150, 450);
+        male_button = new ControlButton("src\\img\\male-character.png", "src\\img\\roll-male-character.png", 150, 450);
+        female_button.setBounds(200, 0, 150, 450);
+        male_button.setBounds(800, 0, 150, 450);
         continued = new ControlButton("src\\img\\continued.png", "src\\img\\roll-continued.png", 100, 100);
         add(continued);
         continued.setBounds(400, 440, 100, 100);
@@ -99,6 +100,22 @@ public class Menu extends JFrame{
         instruction.addActionListener(e -> instructionAction());
         create.addActionListener(e -> createAction());
         continued.addActionListener(e -> continueAction());
+        male_button.addActionListener(e -> chooseMale());
+        female_button.addActionListener(e -> chooseFemale());
+    }
+
+    private void chooseMale()
+    {
+        character = Player.MALE_CHARACTER;
+        male_button.checked();
+        female_button.unchecked();
+    }
+
+    private void chooseFemale()
+    {
+        character = Player.FEMALE_CHARACTER;
+        female_button.checked();
+        male_button.unchecked();
     }
 
     private void startAction()
@@ -108,13 +125,13 @@ public class Menu extends JFrame{
         quit.setVisible(false);
         continued.setVisible(false);
         back.setVisible(false);
+        remove(back);
         remove(start);
         remove(instruction);
         remove(quit);
         remove(continued);
-        remove(back);
-//        this.add(female_button);
-//        this.add(male_button);
+        this.add(female_button);
+        this.add(male_button);
         this.add(warning);
         this.add(create);
         this.add(playerName);
@@ -131,7 +148,7 @@ public class Menu extends JFrame{
             try {
                 FileReader fileReader = new FileReader(file);
                 Scanner scanner = new Scanner(fileReader);
-                Player player = new Player(scanner.nextLine(), Player.MALE_CHARACTER);
+                Player player = new Player(scanner.nextLine(), character);
                 player.setScore(scanner.nextInt());
                 fileReader.close();
                 clip.stop();
@@ -150,12 +167,17 @@ public class Menu extends JFrame{
 
     private void createAction()
     {
+        if(character == null)
+        {
+            warning.setVisible(true);
+            return;
+        }
         if(playerName.getText().equals(""))
         {
             warning.setVisible(true);
             return;
         }
-        Player player = new Player(playerName.getText(), Player.MALE_CHARACTER);
+        Player player = new Player(playerName.getText(), character);
         clip.stop();
         try {
             menu_audio.close();

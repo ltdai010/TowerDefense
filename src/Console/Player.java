@@ -14,27 +14,46 @@ public class Player{
     private String name;
     private JLabel scoreText;
     private JLabel addScore_label;
+    private JLabel avatar;
     private long start;
     private JLabel name_label;
     private GameField gameField;
     private File file;
     private ImageIcon characterIcon;
-    public static final String FEMALE_CHARACTER = "female_character";
-    public static final String MALE_CHARACTER = "male_character";
+    public static final String FEMALE_CHARACTER = "female-avatar";
+    public static final String MALE_CHARACTER = "male-avatar";
+    public static final int AVATAR_SIZE = 100;
+
     private int stage;
     public Player(String name, String character)
     {
         this.name = name;
         this.name_label = new JLabel(name);
+        avatar = new JLabel();
+        loadIcon(character);
+        avatar.setBounds(0, 0, AVATAR_SIZE, AVATAR_SIZE);
+        avatar.setIcon(characterIcon);
         addScore_label = new JLabel();
         addScore_label.setBounds(1000, 50, 100, 50);
         addScore_label.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
         name_label.setFont(new Font(Font.MONOSPACED, Font.BOLD, 32));
-        name_label.setBounds(20,0, 200, 50);
+        name_label.setBounds(AVATAR_SIZE,0, 200, 50);
         scoreText = new JLabel(Integer.toString(score));
         scoreText.setBounds(1000, 0, 100, 50);
         scoreText.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
         start = System.currentTimeMillis();
+    }
+
+    private void loadIcon(String path)
+    {
+        ImageIcon ii = new ImageIcon("src\\img\\" + path + ".png");
+        Image image = ii.getImage().getScaledInstance(AVATAR_SIZE, AVATAR_SIZE, Image.SCALE_SMOOTH);
+        ii = new ImageIcon(image);
+        characterIcon = ii;
+    }
+
+    public JLabel getAvatar() {
+        return avatar;
     }
 
     public void setGameField(GameField gameField) {

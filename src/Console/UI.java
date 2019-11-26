@@ -36,7 +36,7 @@ public class UI {
     {
         initButton();
         stage_label = new JLabel("Stage " + gameField.getStage());
-        stage_label.setBounds(20,50, 200, 50);
+        stage_label.setBounds(Player.AVATAR_SIZE,50, 200, 50);
         stage_label.setFont(new Font(Font.MONOSPACED, Font.BOLD, 26));
         information = new JTextArea();
         information.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
@@ -47,7 +47,7 @@ public class UI {
         coin = new ImageIcon(temp_coin);
         coin_icon = new JLabel("", coin, JLabel.CENTER);
         coin_icon.setBounds(960,10,30,30);
-        gameField.add(stage_label);
+        this.gameField.add(stage_label);
         this.gameField.add(coin_icon);
         this.gameField.add(information);
     }
@@ -149,7 +149,6 @@ public class UI {
                     Menu menu = new Menu();
                     gameField.getClip().stop();
                     gameField.getClip().close();
-                    gameField.getPlayer().saveGame();
                     gameField.getGameStage().setVisible(false);
                     gameField.getGameStage().dispose();
                 }
