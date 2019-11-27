@@ -38,7 +38,7 @@ public class BunchOfGrass extends Bunch{
                 {
                     add(new Grass(j*50, i*50, Grass.grass));
                 }
-                else if (Integer.parseInt(s[j]) == Map.WONDERFUL_GLASS){
+                else if (Integer.parseInt(s[j]) == Map.WONDERFUL_GRASS){
                     add(new Grass(j*50, i*50, Grass.wonderful_grass));
                 }
             }

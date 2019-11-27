@@ -60,15 +60,17 @@ public class Menu extends JFrame{
         warning = new JLabel("Please enter your nickname and choose a character!");
         warning.setFont(new Font(Font.DIALOG, Font.ITALIC, 16));
         warning.setBounds(400, 400, 500, 30);
-            warning.setForeground(Color.RED);
-            loadBackground("src\\img\\background.png");
-            initButton();
-            initAudio();
-            back = new JLabel("",background, JLabel.CENTER);
-            back.setBounds(0,0, sizeX, sizeY);
-            add(back);
-            setIconImage(new ImageIcon("src\\img\\game-icon.png").getImage());
-            setTitle("Tower Defense Game");
+        warning.setForeground(Color.RED);
+        loadBackground("src\\img\\background.png");
+        initButton();
+        initAudio();
+        back = new JLabel("",background, JLabel.CENTER);
+        back.setVisible(false);
+        add(back);
+        back.setBounds(0,0, sizeX, sizeY);
+        back.setVisible(true);
+        setIconImage(new ImageIcon("src\\img\\game-icon.png").getImage());
+        setTitle("Tower Defense Game");
         }
 
         private void initAudio() {
@@ -78,15 +80,11 @@ public class Menu extends JFrame{
             clip.open(menu_audio);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
             clip.start();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
 
-    }
+        }
 
         private void initButton()
         {

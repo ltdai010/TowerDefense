@@ -30,7 +30,7 @@ public class Map {
     public static final int SMALL_ROCK = 9;
     public static final int TINY_ROCK = 10;
     public static final int GLASS = 11;
-    public static final int WONDERFUL_GLASS = 12;
+    public static final int WONDERFUL_GRASS = 12;
     private String mapNumber;
     public static final String MAP1 = "map1";
     public static final String MAP2 = "map2";

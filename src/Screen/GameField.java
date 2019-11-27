@@ -26,15 +26,24 @@ public class GameField extends JPanel implements Runnable{
     private BunchOfEnemy bunchOfEnemy;
     private Thread animator;
     private Map map;
+    private JLabel result;
     private GameStage gameStage;
     private AudioInputStream audioInputStream;
     private Clip clip;
     private UI ui;
     private int stage;
     private boolean pause;
+    public static final String WIN = "win";
+    public static final String LOST = "lost";
     public static final int CONTINUE = 1;
     public static final int NEW = 0;
+    private boolean gameOver;
     public GameField(Player player, GameStage gameStage, int operation) {
+        gameOver = false;
+        result = new JLabel();
+        this.result.setBounds(400, 100 , 400, 400);
+        this.add(result);
+        result.setVisible(false);
         this.player = player;
         player.setGameField(this);
         this.add(player.getScoreText());
@@ -46,7 +55,7 @@ public class GameField extends JPanel implements Runnable{
         if(operation == NEW)
         {
             player.setScore(100);
-            stage = 1;
+            stage = 5;
         }
         try {
             initBoard(operation);
@@ -192,7 +201,7 @@ public class GameField extends JPanel implements Runnable{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        while (true)
+        while (!gameOver)
         {
             if(!pause)
             {
@@ -222,6 +231,11 @@ public class GameField extends JPanel implements Runnable{
                                 e.printStackTrace();
                             }
                         }
+                        else
+                        {
+                            gameOver = true;
+                            pause = true;
+                        }
                     }
                 }
                 repaint();
@@ -232,6 +246,23 @@ public class GameField extends JPanel implements Runnable{
                 bunchOfTower.setSleepTime(System.currentTimeMillis());
             }
         }
+        try {
+            loadResult(WIN);
+            Thread.sleep(5000);
+            this.destroy();
+            Menu menu = new Menu();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadResult(String result) {
+        ImageIcon ii = new ImageIcon("src\\img\\" + result + ".png");
+        Image img = ii.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+        ii = new ImageIcon(img);
+        this.result.setIcon(ii);
+        this.result.setVisible(true);
+        System.out.println("load");
     }
 
     public void loadStage() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
@@ -265,7 +296,12 @@ public class GameField extends JPanel implements Runnable{
         map.getBunchOfRoad().getStartPoint().setBunchOfEnemy(bunchOfEnemy);
     }
 
-
+    private void destroy(){
+        this.getClip().stop();
+        this.getClip().close();
+        this.getGameStage().setVisible(false);
+        this.getGameStage().dispose();
+    }
 
     @Override
     public void addNotify() {
