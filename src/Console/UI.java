@@ -22,6 +22,7 @@ public class UI {
     private ControlButton quit;
     private JLabel coin_icon;
     private JLabel stage_label;
+    private JLabel change_stage;
     private ImageIcon coin;
     private JTextArea information;
     private GameField gameField;
@@ -35,12 +36,14 @@ public class UI {
     private void initUI()
     {
         initButton();
+        change_stage = new JLabel();
+        change_stage.setBounds(550, 250, 100, 100);
+        gameField.add(change_stage);
         stage_label = new JLabel("Stage " + gameField.getStage());
         stage_label.setBounds(Player.AVATAR_SIZE,50, 200, 50);
         stage_label.setFont(new Font(Font.MONOSPACED, Font.BOLD, 26));
         information = new JTextArea();
         information.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
-        information.setBounds(0, 520, 400, 75);
         information.setBackground(Color.ORANGE);
         coin = new ImageIcon("src\\img\\coins.png");
         Image temp_coin = coin.getImage().getScaledInstance(30,30,Image.SCALE_SMOOTH);
@@ -143,7 +146,7 @@ public class UI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameField.setPause(true);
-                int click = JOptionPane.showConfirmDialog(null, "Save Game?");
+                int click = JOptionPane.showConfirmDialog(null, "The game has automatically saved, quit game?");
                 if(click == JOptionPane.YES_OPTION)
                 {
                     Menu menu = new Menu();
@@ -154,12 +157,7 @@ public class UI {
                 }
                 if(click == JOptionPane.NO_OPTION)
                 {
-                    Menu menu = new Menu();
-                    gameField.getClip().stop();
-                    gameField.getClip().close();
-                    gameField.getPlayer().saveScore();
-                    gameField.getGameStage().setVisible(false);
-                    gameField.getGameStage().dispose();
+                    gameField.setPause(false);
                 }
                 if(click == JOptionPane.CANCEL_OPTION)
                 {
@@ -180,6 +178,17 @@ public class UI {
         buyMissileTowerButton.onClickDraw(g);
         buyMachineGunTowerButton.onClickDraw(g);
         sellTowerButton.onClickDraw(g);
+    }
+
+
+    public void drawStage(int stage) throws InterruptedException {
+        change_stage.setVisible(true);
+        ImageIcon button = new ImageIcon("src\\img\\"+ stage +".png");
+        Image image= button.getImage().getScaledInstance(100, 100,
+                Image.SCALE_SMOOTH);
+        change_stage.setIcon(new ImageIcon(image));
+        Thread.sleep(5000);
+        change_stage.setVisible(false);
     }
 
     public BuyTowerButton getBuyAntiTankTowerButton() {

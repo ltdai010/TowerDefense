@@ -48,21 +48,9 @@ public class GameField extends JPanel implements Runnable{
             player.setScore(100);
             stage = 1;
         }
-        else
-        {
-            try {
-                readFile();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
         try {
-            initBoard();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
+            initBoard(operation);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
         ui = new UI(this);
@@ -135,12 +123,14 @@ public class GameField extends JPanel implements Runnable{
         return player;
     }
 
-    private void initBoard() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    private void initBoard(int operation) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         setLayout(null);
         setBounds(0,0, GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT);
         setBackground(Color.WHITE);
         bunchOfTower = new BunchOfTower();
         bunchOfEnemy = new BunchOfEnemy();
+        if(operation == CONTINUE)
+            readFile();
         loadStage();
         setPreferredSize(new Dimension(GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT));
     }
@@ -197,6 +187,11 @@ public class GameField extends JPanel implements Runnable{
     public void run() {
         bunchOfEnemy.setSleepTime(System.currentTimeMillis());
         bunchOfTower.setSleepTime(System.currentTimeMillis());
+        try {
+            ui.drawStage(stage);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         while (true)
         {
             if(!pause)
@@ -221,12 +216,9 @@ public class GameField extends JPanel implements Runnable{
                                 audioInputStream.close();
                                 clip.stop();
                                 clip.close();
+                                ui.drawStage(stage);
                                 loadStage();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (UnsupportedAudioFileException e) {
-                                e.printStackTrace();
-                            } catch (LineUnavailableException e) {
+                            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException e) {
                                 e.printStackTrace();
                             }
                         }
