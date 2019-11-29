@@ -1,8 +1,10 @@
 â
+male-avatar
 220
 2
 ST 300 400
 MT 500 200
 AT 350 300
 end
-end
+50
+1000

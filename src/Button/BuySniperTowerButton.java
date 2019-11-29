@@ -42,10 +42,10 @@ public class BuySniperTowerButton extends BuyTowerButton {
     @Override
     public boolean enoughMoney()
     {
-        if(gameField.getPlayer().getScore() >= SniperTower.price)
+        if(gameField.getPlayer().getCoin() >= SniperTower.price)
         {
             map.addObject(imageLocationY/50, imageLocationX/50, Map.TOWER);
-            gameField.getPlayer().addScore(-SniperTower.price);
+            gameField.getPlayer().addCoin(-SniperTower.price);
             return true;
         }
         return false;

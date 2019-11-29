@@ -6,12 +6,10 @@ import Screen.GameStage;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Scanner;
 import Button.ControlButton;;
 
@@ -163,8 +161,8 @@ public class Menu extends JFrame{
                 try {
                     FileReader fileReader = new FileReader(file);
                     Scanner scanner = new Scanner(fileReader);
-                    Player player = new Player(scanner.nextLine(), character);
-                    player.setScore(scanner.nextInt());
+                    Player player = new Player(scanner.nextLine(), scanner.nextLine());
+                    player.setCoin(scanner.nextInt());
                     fileReader.close();
                     clip.stop();
                     menu_audio.close();

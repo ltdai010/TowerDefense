@@ -2,10 +2,7 @@ package Button;
 
 import Bunch.BunchOfTower;
 import Console.Map;
-import PortableEntity.Bullet.Missile;
 import Screen.GameField;
-import TileEntity.Tower.AntiTankTower;
-import TileEntity.Tower.MachineGunTower;
 import TileEntity.Tower.MissileTower;
 
 import javax.swing.*;
@@ -34,10 +31,10 @@ public class BuyMissileTowerButton extends BuyTowerButton {
     @Override
     public boolean enoughMoney()
     {
-        if(gameField.getPlayer().getScore() >= MissileTower.price)
+        if(gameField.getPlayer().getCoin() >= MissileTower.price)
         {
             map.addObject(imageLocationY/50, imageLocationX/50, Map.TOWER);
-            gameField.getPlayer().addScore(-MissileTower.price);
+            gameField.getPlayer().addCoin(-MissileTower.price);
             return true;
         }
         return false;

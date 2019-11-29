@@ -8,7 +8,6 @@ import Console.Player;
 import Console.UI;
 import PortableEntity.Enemy.*;
 import PortableEntity.GameEntity;
-import Button.*;
 import TileEntity.Tower.*;
 
 import javax.sound.sampled.*;
@@ -33,6 +32,7 @@ public class GameField extends JPanel implements Runnable{
     private UI ui;
     private int stage;
     private boolean pause;
+    private String state;
     public static final String WIN = "win";
     public static final String LOST = "lost";
     public static final int CONTINUE = 1;
@@ -54,8 +54,9 @@ public class GameField extends JPanel implements Runnable{
         this.gameStage = gameStage;
         if(operation == NEW)
         {
+            player.setCoin(100);
             player.setScore(100);
-            stage = 5;
+            stage = 1;
         }
         try {
             initBoard(operation);
@@ -71,9 +72,10 @@ public class GameField extends JPanel implements Runnable{
     }
 
 
-    private void readFile() throws FileNotFoundException {
+    private void readFile() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         FileReader fileReader = new FileReader("src\\save\\game\\player.txt");
         Scanner scanner = new Scanner(fileReader);
+        scanner.nextLine();
         scanner.nextLine();
         scanner.nextLine();
         stage = scanner.nextInt();
@@ -101,31 +103,9 @@ public class GameField extends JPanel implements Runnable{
             }
             line = scanner.nextLine();
         }
-        line = scanner.nextLine();
-        while (line.compareTo("end")!=0)
-        {
-            String[] s = line.split(" ");
-            switch (s[0])
-            {
-                case "BE":
-                    Enemy enemy = new BossEnemy(map);
-                    bunchOfEnemy.add(enemy);
-                    break;
-                case "NE":
-                    Enemy enemy1 = new NormalEnemy(map);
-                    bunchOfEnemy.add(enemy1);
-                    break;
-                case "SE":
-                    Enemy enemy2 = new SmallEnemy(map);
-                    bunchOfEnemy.add(enemy2);
-                    break;
-                case "TE":
-                    Enemy enemy3 = new TankerEnemy(map);
-                    bunchOfEnemy.add(enemy3);
-                    break;
-            }
-            line = scanner.nextLine();
-        }
+        loadStage();
+        map.getBunchOfRoad().getTarget().setHP(scanner.nextInt());
+        player.setScore(scanner.nextInt());
     }
 
     public Player getPlayer() {
@@ -139,8 +119,11 @@ public class GameField extends JPanel implements Runnable{
         bunchOfTower = new BunchOfTower();
         bunchOfEnemy = new BunchOfEnemy();
         if(operation == CONTINUE)
+        {
             readFile();
-        loadStage();
+        }
+        else
+            loadStage();
         setPreferredSize(new Dimension(GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT));
     }
 
@@ -203,12 +186,20 @@ public class GameField extends JPanel implements Runnable{
         }
         while (!gameOver)
         {
+            if(map.getBunchOfRoad().getTarget().getHP() <= 0)
+            {
+                player.saveScore();
+                state = LOST;
+                gameOver = true;
+                pause = true;
+            }
             if(!pause)
             {
                 ui.setInformationText();
                 bunchOfEnemy.onAction();
                 bunchOfTower.onAction(bunchOfEnemy);
                 player.addScoreAnimate();
+                System.out.println(player.getScore());
                 if(!map.getBunchOfRoad().getStartPoint().spawnEnemy())
                 {
                     if(bunchOfEnemy.getBunch().size() == 0)
@@ -233,7 +224,9 @@ public class GameField extends JPanel implements Runnable{
                         }
                         else
                         {
+                            player.saveScore();
                             gameOver = true;
+                            state = WIN;
                             pause = true;
                         }
                     }
@@ -247,7 +240,7 @@ public class GameField extends JPanel implements Runnable{
             }
         }
         try {
-            loadResult(WIN);
+            loadResult(state);
             Thread.sleep(5000);
             this.destroy();
             Menu menu = new Menu();
@@ -262,7 +255,6 @@ public class GameField extends JPanel implements Runnable{
         ii = new ImageIcon(img);
         this.result.setIcon(ii);
         this.result.setVisible(true);
-        System.out.println("load");
     }
 
     public void loadStage() throws IOException, UnsupportedAudioFileException, LineUnavailableException {

@@ -4,8 +4,6 @@ import Bunch.BunchOfTower;
 import Console.Map;
 import Screen.GameField;
 import TileEntity.Tower.AntiTankTower;
-import TileEntity.Tower.NormalTower;
-import TileEntity.Tower.Tower;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,10 +41,10 @@ public class BuyAnitiTankTowerButton extends BuyTowerButton {
     @Override
     public boolean enoughMoney()
     {
-        if(gameField.getPlayer().getScore() >= AntiTankTower.price)
+        if(gameField.getPlayer().getCoin() >= AntiTankTower.price)
         {
             map.addObject(imageLocationY/50, imageLocationX/50, Map.TOWER);
-            gameField.getPlayer().addScore(-AntiTankTower.price);
+            gameField.getPlayer().addCoin(-AntiTankTower.price);
             return true;
         }
         return false;

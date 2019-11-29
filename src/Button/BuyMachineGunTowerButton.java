@@ -4,7 +4,6 @@ import Bunch.BunchOfTower;
 import Console.Map;
 import Screen.GameField;
 import TileEntity.Tower.MachineGunTower;
-import TileEntity.Tower.MissileTower;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,10 +38,10 @@ public class BuyMachineGunTowerButton extends BuyTowerButton {
     @Override
     public boolean enoughMoney()
     {
-        if(gameField.getPlayer().getScore() >= MachineGunTower.price)
+        if(gameField.getPlayer().getCoin() >= MachineGunTower.price)
         {
             map.addObject(imageLocationY/50, imageLocationX/50, Map.TOWER);
-            gameField.getPlayer().addScore(-MachineGunTower.price);
+            gameField.getPlayer().addCoin(-MachineGunTower.price);
             return true;
         }
         return false;

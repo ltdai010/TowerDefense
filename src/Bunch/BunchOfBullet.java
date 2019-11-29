@@ -62,7 +62,7 @@ public class BunchOfBullet extends Bunch {
         enemy.decreaseHP(bunch.get(i).getDamage());
         if(enemy.getHP() <= 0)
         {
-            player.addScore(enemy.getPrize());
+            player.addCoin(enemy.getPrize());
             return true;
         }
         return false;

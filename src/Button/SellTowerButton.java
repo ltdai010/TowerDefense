@@ -4,7 +4,6 @@ import Bunch.BunchOfTower;
 import Console.Map;
 import PortableEntity.GameEntity;
 import Screen.GameField;
-import TileEntity.Tower.Tower;
 
 import javax.swing.*;
 import java.awt.*;
@@ -113,7 +112,7 @@ public class SellTowerButton extends JButton implements MouseListener {
             if(bunchOfTower.getBunch().get(i).getLocationX() == imageLocationX
                     && bunchOfTower.getBunch().get(i).getLocationY() == imageLocationY)
             {
-                gameField.getPlayer().addScore(bunchOfTower.getBunch().get(i).getPrice()/2);
+                gameField.getPlayer().addCoin(bunchOfTower.getBunch().get(i).getPrice()/2);
                 map.addObject(bunchOfTower.getBunch().get(i).getLocationY()/50, bunchOfTower.getBunch().get(i).getLocationX()/50, Map.MOUNTAIN);
                 bunchOfTower.getBunch().remove(i);
             }

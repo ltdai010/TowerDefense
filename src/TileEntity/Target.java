@@ -32,6 +32,17 @@ public class Target implements GameTileEntity {
         return point;
     }
 
+    public int getHP() {
+        return HP;
+    }
+
+    public void setHP(int HP) {
+        this.HP = HP;
+        HP_label.setText(this.HP + "/" + MaxHP);
+        healthBar.decreaseGreenBar((double)this.HP/(double)MaxHP);
+        healthBar.getGreenBar().getWidth(null);
+    }
+
     public void decreaseHP(int HP) {
         this.HP -= HP;
         HP_label.setText(this.HP + "/" + MaxHP);
