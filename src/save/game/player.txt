@@ -1,7 +1,7 @@
 aa
 male-avatar
 100
-0
+1
 end
 100
 100

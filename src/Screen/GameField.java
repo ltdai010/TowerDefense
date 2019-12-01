@@ -26,7 +26,6 @@ public class GameField extends JPanel implements Runnable{
     private BunchOfEnemy bunchOfEnemy;
     private Thread animator;
     private Map map;
-    private JLabel result;
     private GameStage gameStage;
     private AudioInputStream audioInputStream;
     private Clip clip;
@@ -41,10 +40,6 @@ public class GameField extends JPanel implements Runnable{
     private boolean gameOver;
     public GameField(Player player, GameStage gameStage, int operation) {
         gameOver = false;
-        result = new JLabel();
-        this.result.setBounds(400, 100 , 400, 400);
-        this.add(result);
-        result.setVisible(false);
         this.player = player;
         player.setGameField(this);
         this.add(player.getScoreText());
@@ -185,6 +180,8 @@ public class GameField extends JPanel implements Runnable{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        gameOver= true;
+        state = WIN;
         while (!gameOver)
         {
             if(map.getBunchOfRoad().getTarget().getHP() <= 0)
@@ -200,7 +197,6 @@ public class GameField extends JPanel implements Runnable{
                 bunchOfEnemy.onAction();
                 bunchOfTower.onAction(bunchOfEnemy);
                 player.addScoreAnimate();
-                player.saveGame();
                 if(!map.getBunchOfRoad().getStartPoint().spawnEnemy())
                 {
                     if(bunchOfEnemy.getBunch().size() == 0)
@@ -240,23 +236,9 @@ public class GameField extends JPanel implements Runnable{
                 bunchOfTower.setSleepTime(System.currentTimeMillis());
             }
         }
-        try {
-            loadResult(state);
-            Thread.sleep(5000);
-            this.destroy();
-            Menu menu = new Menu();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        ui.loadResult(state);
     }
 
-    private void loadResult(String result) {
-        ImageIcon ii = new ImageIcon("src\\img\\" + result + ".png");
-        Image img = ii.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
-        ii = new ImageIcon(img);
-        this.result.setIcon(ii);
-        this.result.setVisible(true);
-    }
 
     public void loadStage() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         int HP = Target.MaxHP;

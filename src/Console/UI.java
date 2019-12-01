@@ -11,6 +11,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
 
 public class UI {
     private BuyTowerButton buyNormalTowerButton;
@@ -18,12 +23,17 @@ public class UI {
     private BuyTowerButton buyAntiTankTowerButton;
     private BuyTowerButton buyMachineGunTowerButton;
     private BuyTowerButton buyMissileTowerButton;
+    private ControlButton back_menu;
+    private ControlButton leaderBoard;
     private SellTowerButton sellTowerButton;
     private ControlButton quit;
     private JLabel coin_icon;
     private JLabel stage_label;
     private JLabel change_stage;
     private JLabel store_icon;
+    private JLabel result;
+    private JLabel result_score;
+    private JLabel result_bestScore;
     private ImageIcon coin;
     private JTextArea information;
     private GameField gameField;
@@ -31,12 +41,35 @@ public class UI {
     public UI(GameField gameField)
     {
         this.gameField = gameField;
-        initUI();
+        try {
+            initUI();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void initUI()
-    {
+    private void initUI() throws FileNotFoundException {
         initButton();
+        initText();
+    }
+
+    private void initText() throws FileNotFoundException {
+        result_score = new JLabel(Integer.toString(gameField.getPlayer().getScore()));
+        result_score.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 24));
+        result_score.setBounds(500, 290, 200, 50);
+        result_score.setHorizontalAlignment(SwingConstants.CENTER);
+        result_score.setVisible(false);
+        gameField.add(result_score);
+        result_bestScore = new JLabel(Integer.toString(bestScore(new File("src\\save\\score"))));
+        result_bestScore.setBounds(500, 340, 200, 50);
+        result_bestScore.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
+        result_bestScore.setHorizontalAlignment(SwingConstants.CENTER);
+        result_bestScore.setVisible(false);
+        gameField.add(result_bestScore);
+        result = new JLabel();
+        result.setBounds(400, 100 , 400, 400);
+        gameField.add(result);
+        result.setVisible(false);
         change_stage = new JLabel();
         change_stage.setBounds(550, 250, 100, 100);
         gameField.add(change_stage);
@@ -60,6 +93,31 @@ public class UI {
         this.gameField.add(coin_icon);
         this.gameField.add(information);
         this.gameField.add(store_icon);
+    }
+
+    public int bestScore(File folder) throws FileNotFoundException {
+        ArrayList<Player> arrayList = new ArrayList<>();
+        int max = 0;
+        for (File fileEntry : folder.listFiles()) {
+            Scanner scanner = new Scanner(fileEntry);
+            scanner.nextInt();
+            int tmp = scanner.nextInt();
+            if(tmp > max)
+            {
+                max = tmp;
+            }
+        }
+        return max;
+    }
+
+    public void loadResult(String result) {
+        ImageIcon ii = new ImageIcon("src\\img\\" + result + ".png");
+        Image img = ii.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+        ii = new ImageIcon(img);
+        this.result.setIcon(ii);
+        this.result.setVisible(true);
+        this.result_score.setVisible(true);
+        this.result_bestScore.setVisible(true);
     }
 
     public JTextArea getInformation() {
