@@ -23,6 +23,7 @@ public class UI {
     private JLabel coin_icon;
     private JLabel stage_label;
     private JLabel change_stage;
+    private JLabel store_icon;
     private ImageIcon coin;
     private JTextArea information;
     private GameField gameField;
@@ -50,9 +51,15 @@ public class UI {
         coin = new ImageIcon(temp_coin);
         coin_icon = new JLabel("", coin, JLabel.CENTER);
         coin_icon.setBounds(960,10,30,30);
+        ImageIcon icon = new ImageIcon("src\\img\\store_icon.png");
+        Image img = icon.getImage().getScaledInstance(150, 50, Image.SCALE_SMOOTH);
+        icon = new ImageIcon(img);
+        store_icon = new JLabel("", icon, JLabel.CENTER);
+        store_icon.setBounds(150,525, 150, 50);
         this.gameField.add(stage_label);
         this.gameField.add(coin_icon);
         this.gameField.add(information);
+        this.gameField.add(store_icon);
     }
 
     public JTextArea getInformation() {

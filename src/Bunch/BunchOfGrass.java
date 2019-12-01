@@ -34,7 +34,7 @@ public class BunchOfGrass extends Bunch{
             String[] s = line.split(" ");
             for (int j = 0; j < 24; ++j)
             {
-                if(Integer.parseInt(s[j]) == Map.GLASS)
+                if(Integer.parseInt(s[j]) == Map.GRASS)
                 {
                     add(new Grass(j*50, i*50, Grass.grass));
                 }
