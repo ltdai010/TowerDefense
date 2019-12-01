@@ -88,9 +88,9 @@ public class Menu extends JFrame{
             name.setOpaque(false);
             score.setOpaque(false);
             stage.setOpaque(false);
-            name.setFont(new Font(Font.DIALOG, Font.BOLD, 24));
-            score.setFont(new Font(Font.DIALOG, Font.BOLD, 24));
-            stage.setFont(new Font(Font.DIALOG, Font.BOLD, 24));
+            name.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
+            score.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
+            stage.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
             this.add(name);
             this.add(score);
             this.add(stage);
@@ -122,7 +122,7 @@ public class Menu extends JFrame{
             add(back_button);
             back_button.setBounds(1120, 10, 50, 50);
             back_button.setVisible(false);
-            leaderBoard_button = new ControlButton("src\\img\\about.png", "src\\img\\roll-about.png", 50, 50);
+            leaderBoard_button = new ControlButton("src\\img\\ranking_icon.png", "src\\img\\roll_ranking_icon.png", 50, 50);
             add(leaderBoard_button);
             leaderBoard_button.setBounds(30, 10, 50, 50);
             female_button = new ControlButton("src\\img\\female-character.png", "src\\img\\roll-female-character.png", 150, 450);
@@ -250,7 +250,7 @@ public class Menu extends JFrame{
                     FileReader fileReader = new FileReader(file);
                     Scanner scanner = new Scanner(fileReader);
                     Player player = new Player(scanner.nextLine(), scanner.nextLine());
-                    player.setCoin(scanner.nextInt());
+                    player.setCoin(scanner.nextInt() - 100);
                     fileReader.close();
                     clip.stop();
                     menu_audio.close();
@@ -278,7 +278,7 @@ public class Menu extends JFrame{
         }
         Collections.sort(arrayList);
         int i = 0;
-        while (i < 10 && i < arrayList.size())
+        while (i < 5 && i < arrayList.size())
         {
             name.append("\n" + arrayList.get(i).getName());
             score.append("\n" + arrayList.get(i).getScore());
