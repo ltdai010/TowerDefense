@@ -8,6 +8,7 @@ import Console.Player;
 import Console.UI;
 import PortableEntity.Enemy.*;
 import PortableEntity.GameEntity;
+import TileEntity.Target;
 import TileEntity.Tower.*;
 
 import javax.sound.sampled.*;
@@ -54,8 +55,8 @@ public class GameField extends JPanel implements Runnable{
         this.gameStage = gameStage;
         if(operation == NEW)
         {
-            player.setCoin(100);
-            player.setScore(100);
+            player.setCoin(0);
+            player.setScore(0);
             stage = 1;
         }
         try {
@@ -117,7 +118,7 @@ public class GameField extends JPanel implements Runnable{
         setBounds(0,0, GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT);
         setBackground(Color.WHITE);
         bunchOfTower = new BunchOfTower();
-        bunchOfEnemy = new BunchOfEnemy();
+        bunchOfEnemy = new BunchOfEnemy(this);
         if(operation == CONTINUE)
         {
             readFile();
@@ -199,7 +200,7 @@ public class GameField extends JPanel implements Runnable{
                 bunchOfEnemy.onAction();
                 bunchOfTower.onAction(bunchOfEnemy);
                 player.addScoreAnimate();
-                System.out.println(player.getScore());
+                player.saveGame();
                 if(!map.getBunchOfRoad().getStartPoint().spawnEnemy())
                 {
                     if(bunchOfEnemy.getBunch().size() == 0)
@@ -258,6 +259,12 @@ public class GameField extends JPanel implements Runnable{
     }
 
     public void loadStage() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        int HP = Target.MaxHP;
+        player.addCoin(100);
+        if(map != null)
+        {
+            HP = map.getBunchOfRoad().getTarget().getHP();
+        }
         if(stage == 1)
         {
             map = new Map(Map.MAP1);
@@ -284,6 +291,7 @@ public class GameField extends JPanel implements Runnable{
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.start();
         this.add(map.getBunchOfRoad().getTarget().getHP_label());
+        map.getBunchOfRoad().getTarget().setHP(HP);
         map.getBunchOfRoad().getStartPoint().setStartTime(System.currentTimeMillis());
         map.getBunchOfRoad().getStartPoint().setBunchOfEnemy(bunchOfEnemy);
     }

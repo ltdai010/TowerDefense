@@ -2,6 +2,7 @@ package Bunch;
 
 import PortableEntity.Enemy.Enemy;
 import PortableEntity.GameEntity;
+import Screen.GameField;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.awt.*;
@@ -10,9 +11,10 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class BunchOfEnemy extends Bunch{
-    public BunchOfEnemy()
+    GameField gameField;
+    public BunchOfEnemy(GameField gameField)
     {
-
+        this.gameField = gameField;
     }
     private ArrayList<Enemy> bunch = new ArrayList<Enemy>();
 
@@ -61,6 +63,7 @@ public class BunchOfEnemy extends Bunch{
         {
             if(!bunch.get(i).move())
             {
+                gameField.getPlayer().addCoin(bunch.get(i).getPrize()/2);
                 bunch.remove(i);
                 --i;
             }

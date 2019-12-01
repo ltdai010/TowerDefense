@@ -121,11 +121,11 @@ public class UI {
 
     private void initButton()
     {
-        buyNormalTowerButton = new BuyNormalTowerButton(GameEntity.SCREENWIDTH - 500 - 10 - Target.HB_width,515, gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buySniperTowerButton = new BuySniperTowerButton(GameEntity.SCREENWIDTH - 400 - 10 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buyAntiTankTowerButton = new BuyAnitiTankTowerButton(GameEntity.SCREENWIDTH - 300 - 10 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buyMachineGunTowerButton = new BuyMachineGunTowerButton(GameEntity.SCREENWIDTH - 200 - 10 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
-        buyMissileTowerButton = new BuyMissileTowerButton(GameEntity.SCREENWIDTH + -100 - 10 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyNormalTowerButton = new BuyNormalTowerButton(GameEntity.SCREENWIDTH - 600 - Target.HB_width,515, gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buySniperTowerButton = new BuySniperTowerButton(GameEntity.SCREENWIDTH - 500 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyAntiTankTowerButton = new BuyAnitiTankTowerButton(GameEntity.SCREENWIDTH - 400 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyMachineGunTowerButton = new BuyMachineGunTowerButton(GameEntity.SCREENWIDTH - 300 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
+        buyMissileTowerButton = new BuyMissileTowerButton(GameEntity.SCREENWIDTH - 200 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
         gameField.add(buyNormalTowerButton);
         gameField.add(buySniperTowerButton);
         gameField.add(buyAntiTankTowerButton);
@@ -136,7 +136,7 @@ public class UI {
         gameField.addMouseListener(buyAntiTankTowerButton);
         gameField.addMouseListener(buyMachineGunTowerButton);
         gameField.addMouseListener(buyMissileTowerButton);
-        sellTowerButton = new SellTowerButton(GameEntity.SCREENWIDTH - 10 - Target.HB_width, 515, gameField.getBunchOfTower(),gameField, gameField.getMap());
+        sellTowerButton = new SellTowerButton(GameEntity.SCREENWIDTH - 100 - Target.HB_width, 515, gameField.getBunchOfTower(),gameField, gameField.getMap());
         gameField.add(sellTowerButton);
         gameField.addMouseListener(sellTowerButton);
         quit = new ControlButton("src\\img\\close_2.png", "src\\img\\roll-close_2.png", 40, 40);

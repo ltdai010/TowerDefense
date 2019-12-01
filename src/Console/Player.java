@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 
-public class Player{
+public class Player implements Comparable<Player>{
     private int coin = 0;
     private String name;
     private JLabel scoreText;
@@ -43,6 +43,13 @@ public class Player{
         scoreText.setBounds(1000, 0, 100, 50);
         scoreText.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
         start = System.currentTimeMillis();
+    }
+
+    public Player(int stage, int score, String name)
+    {
+        this.stage = stage;
+        this.name = name;
+        this.score = score;
     }
 
     private void loadIcon(String path)
@@ -99,7 +106,7 @@ public class Player{
         try {
             file = new File("src\\save\\score\\" + this.name +".txt");
             FileWriter fileWriter = new FileWriter(file);
-            fileWriter.append(this.name + "\n");
+            fileWriter.append(this.stage + "\n");
             fileWriter.append(score + "\n");
             fileWriter.close();
         } catch (IOException e) {
@@ -173,5 +180,14 @@ public class Player{
 
     public int getCoin() {
         return coin;
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        if(this.stage != o.stage)
+            return this.stage - o.stage;
+        if(this.score != o.score)
+            return this.score - o.score;
+        return this.name.compareTo(o.name);
     }
 }

@@ -1,8 +1,6 @@
 package Screen;
 
 import Console.Player;
-import PortableEntity.GameEntity;
-import Screen.GameField;
 
 import javax.swing.*;
 public class GameStage extends JFrame {
@@ -26,6 +24,8 @@ public class GameStage extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
+        setIconImage(new ImageIcon("src\\img\\game-icon.png").getImage());
+        setTitle("Tower Defense Game");
         GameField gameField = new GameField(player, this, operation);
         add(gameField);
     }
