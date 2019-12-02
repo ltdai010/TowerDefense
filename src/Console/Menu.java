@@ -1,5 +1,6 @@
 package Console;
 
+import PortableEntity.GameEntity;
 import Screen.GameField;
 import Screen.GameStage;
 
@@ -10,9 +11,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
+
 import Button.ControlButton;;
 
 public class Menu extends JFrame{
@@ -24,8 +24,11 @@ public class Menu extends JFrame{
     private ControlButton male_button;
     private ControlButton leaderBoard_button;
     private ControlButton back_button;
+    private ControlButton next_button;
+    private ControlButton pre_button;
     private AudioInputStream menu_audio;
     private Clip clip;
+    private ArrayList<JLabel> instruction_list;
     private ControlButton create;
     private ImageIcon backgroundImage;
     private JLabel background;
@@ -37,6 +40,7 @@ public class Menu extends JFrame{
     private JTextField playerName;
     private final int sizeX = 1206;
     private final int sizeY = 630;
+    private int instructionPage;
     private String character;
 
     public Menu()
@@ -75,6 +79,7 @@ public class Menu extends JFrame{
 
         private void initText()
         {
+            setInstructionScreen();
             ImageIcon icon = new ImageIcon("src\\img\\character-name-area.png");
             int icon_width = icon.getIconWidth();
             int icon_length = icon.getIconHeight();
@@ -116,8 +121,28 @@ public class Menu extends JFrame{
             warning.setForeground(Color.RED);
         }
 
+        private void setInstructionScreen()
+        {
+            instruction_list = new ArrayList<>();
+            for(int i = 1; i < 6; ++i)
+            {
+                ImageIcon ii = new ImageIcon("src\\img\\instruction-" + i +".png");
+                Image image = ii.getImage().getScaledInstance(GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT,
+                        Image.SCALE_SMOOTH);
+                instruction_list.add(new JLabel(new ImageIcon(image)));
+            }
+        }
+
         private void initButton()
         {
+            pre_button = new ControlButton("src\\img\\prew.png", "src\\img\\roll_prew.png", 100, 100);
+            next_button = new ControlButton("src\\img\\next.png", "src\\img\\roll_next.png", 100, 100);
+            pre_button.setBounds(100, 500, 100, 100);
+            next_button.setBounds(1000, 500, 100, 100);
+            pre_button.setVisible(false);
+            next_button.setVisible(false);
+            this.add(next_button);
+            this.add(pre_button);
             back_button = new ControlButton("src\\img\\close.png", "src\\img\\roll-close.png", 50, 50);
             add(back_button);
             back_button.setBounds(1120, 10, 50, 50);
@@ -158,6 +183,42 @@ public class Menu extends JFrame{
                 }
             });
             back_button.addActionListener(e -> backAction());
+            next_button.addActionListener(e-> nextAction());
+            pre_button.addActionListener(e -> preAction());
+        }
+
+        private void nextAction()
+        {
+            if(++instructionPage < instruction_list.size())
+            {
+                background.setVisible(false);
+                remove(background);
+                background = instruction_list.get(instructionPage);
+                background.setVisible(true);
+                add(background);
+                background.setBounds(0, 0, GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT);
+            }
+            else
+            {
+                instructionPage--;
+            }
+        }
+
+        private void preAction()
+        {
+            if(--instructionPage >= 0)
+            {
+                background.setVisible(false);
+                remove(background);
+                background = instruction_list.get(instructionPage);
+                background.setVisible(true);
+                add(background);
+                background.setBounds(0, 0, GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT);
+            }
+            else
+            {
+                instructionPage++;
+            }
         }
 
         private void backAction()
@@ -168,6 +229,7 @@ public class Menu extends JFrame{
 
         private void destroy()
         {
+            this.removeAll();
             this.clip.stop();
             this.clip.close();
             this.setVisible(false);
@@ -175,18 +237,7 @@ public class Menu extends JFrame{
         }
 
         public void leaderBoardAction() throws FileNotFoundException {
-            start.setVisible(false);
-            instruction.setVisible(false);
-            quit.setVisible(false);
-            continued.setVisible(false);
-            background.setVisible(false);
-            leaderBoard_button.setVisible(false);
-            remove(background);
-            remove(start);
-            remove(instruction);
-            remove(quit);
-            remove(continued);
-            remove(leaderBoard_button);
+            destroyMainMenu();
             back_button.setVisible(true);
             listFilesForFolder(new File("src\\save\\score\\"));
             name.setVisible(true);
@@ -214,18 +265,7 @@ public class Menu extends JFrame{
 
         public void startAction()
         {
-            start.setVisible(false);
-            instruction.setVisible(false);
-            quit.setVisible(false);
-            continued.setVisible(false);
-            background.setVisible(false);
-            leaderBoard_button.setVisible(false);
-            remove(background);
-            remove(start);
-            remove(instruction);
-            remove(quit);
-            remove(continued);
-            remove(leaderBoard_button);
+            destroyMainMenu();
             this.add(female_button);
             this.add(male_button);
             this.add(warning);
@@ -250,7 +290,7 @@ public class Menu extends JFrame{
                     FileReader fileReader = new FileReader(file);
                     Scanner scanner = new Scanner(fileReader);
                     Player player = new Player(scanner.nextLine(), scanner.nextLine());
-                    player.setCoin(scanner.nextInt() - 100);
+                    player.setCoin(scanner.nextInt());
                     fileReader.close();
                     clip.stop();
                     menu_audio.close();
@@ -258,8 +298,6 @@ public class Menu extends JFrame{
                     GameStage gameStage = new GameStage(sizeX, sizeY, player, GameField.CONTINUE);
                     this.setVisible(false);
                     this.dispose();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -319,10 +357,35 @@ public class Menu extends JFrame{
     }
     private void instructionAction()
     {
+        destroyMainMenu();
+        instructionPage = 0;
+        background = instruction_list.get(instructionPage);
+        background.setBounds(0, 0, GameEntity.SCREENWIDTH, GameEntity.SCREENHEIGHT);
+        add(background);
+        back_button.setVisible(true);
+        pre_button.setVisible(true);
+        next_button.setVisible(true);
     }
+
     public void loadBackground(String path){
         backgroundImage = new ImageIcon(path);
         Image image = backgroundImage.getImage().getScaledInstance(sizeX, sizeY, Image.SCALE_SMOOTH);
         backgroundImage = new ImageIcon(image);
+    }
+
+    private void destroyMainMenu()
+    {
+        start.setVisible(false);
+        instruction.setVisible(false);
+        quit.setVisible(false);
+        continued.setVisible(false);
+        background.setVisible(false);
+        leaderBoard_button.setVisible(false);
+        remove(background);
+        remove(start);
+        remove(instruction);
+        remove(quit);
+        remove(continued);
+        remove(leaderBoard_button);
     }
 }

@@ -279,6 +279,7 @@ public class GameField extends JPanel implements Runnable{
     }
 
     public void destroy(){
+        this.removeAll();
         this.getClip().stop();
         this.getClip().close();
         this.getGameStage().setVisible(false);
