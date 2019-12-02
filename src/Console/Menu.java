@@ -174,7 +174,7 @@ public class Menu extends JFrame{
             this.dispose();
         }
 
-        private void leaderBoardAction() throws FileNotFoundException {
+        public void leaderBoardAction() throws FileNotFoundException {
             start.setVisible(false);
             instruction.setVisible(false);
             quit.setVisible(false);
@@ -192,7 +192,7 @@ public class Menu extends JFrame{
             name.setVisible(true);
             score.setVisible(true);
             stage.setVisible(true);
-            loadBackground("src\\img\\after_menu_background.png");
+            loadBackground("src\\img\\score_board.png");
             background = new JLabel("", backgroundImage, JLabel.CENTER);
             background.setBounds(0,0, sizeX, sizeY);
             add(background);
@@ -212,7 +212,7 @@ public class Menu extends JFrame{
             male_button.unchecked();
         }
 
-        private void startAction()
+        public void startAction()
         {
             start.setVisible(false);
             instruction.setVisible(false);

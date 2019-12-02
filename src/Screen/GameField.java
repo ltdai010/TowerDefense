@@ -180,8 +180,8 @@ public class GameField extends JPanel implements Runnable{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        gameOver= true;
-        state = WIN;
+//        gameOver= true; //you can set the win or lost state here
+//        state = LOST;
         while (!gameOver)
         {
             if(map.getBunchOfRoad().getTarget().getHP() <= 0)
@@ -278,7 +278,7 @@ public class GameField extends JPanel implements Runnable{
         map.getBunchOfRoad().getStartPoint().setBunchOfEnemy(bunchOfEnemy);
     }
 
-    private void destroy(){
+    public void destroy(){
         this.getClip().stop();
         this.getClip().close();
         this.getGameStage().setVisible(false);

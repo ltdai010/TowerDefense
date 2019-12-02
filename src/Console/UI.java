@@ -23,8 +23,9 @@ public class UI {
     private BuyTowerButton buyAntiTankTowerButton;
     private BuyTowerButton buyMachineGunTowerButton;
     private BuyTowerButton buyMissileTowerButton;
-    private ControlButton back_menu;
-    private ControlButton leaderBoard;
+    private ControlButton backToMenu_button;
+    private ControlButton leaderBoard_button;
+    private ControlButton playAgain_button;
     private SellTowerButton sellTowerButton;
     private ControlButton quit;
     private JLabel coin_icon;
@@ -115,9 +116,15 @@ public class UI {
         Image img = ii.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
         ii = new ImageIcon(img);
         this.result.setIcon(ii);
+        this.playAgain_button.setVisible(true);
+        this.backToMenu_button.setVisible(true);
+        this.leaderBoard_button.setVisible(true);
+        if(result.equals(GameField.WIN))
+        {
+            this.result_score.setVisible(true);
+            this.result_bestScore.setVisible(true);
+        }
         this.result.setVisible(true);
-        this.result_score.setVisible(true);
-        this.result_bestScore.setVisible(true);
     }
 
     public JTextArea getInformation() {
@@ -186,6 +193,18 @@ public class UI {
 
     private void initButton()
     {
+        playAgain_button = new ControlButton("src\\img\\continued.png", "src\\img\\roll-continued.png", 50, 50);
+        leaderBoard_button = new ControlButton("src\\img\\ranking_icon.png", "src\\img\\roll_ranking_icon.png", 50, 50);
+        backToMenu_button = new ControlButton("src\\img\\menu.png", "src\\img\\roll_menu.png", 50, 50);
+        playAgain_button.setBounds(575, 420, 50, 50);
+        leaderBoard_button.setBounds(500, 420, 50, 50);
+        backToMenu_button.setBounds(650, 420, 50, 50);
+        playAgain_button.setVisible(false);
+        leaderBoard_button.setVisible(false);
+        backToMenu_button.setVisible(false);
+        gameField.add(playAgain_button);
+        gameField.add(leaderBoard_button);
+        gameField.add(backToMenu_button);
         buyNormalTowerButton = new BuyNormalTowerButton(GameEntity.SCREENWIDTH - 600 - Target.HB_width,515, gameField.getBunchOfTower(), gameField, gameField.getMap());
         buySniperTowerButton = new BuySniperTowerButton(GameEntity.SCREENWIDTH - 500 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
         buyAntiTankTowerButton = new BuyAnitiTankTowerButton(GameEntity.SCREENWIDTH - 400 - Target.HB_width,515 , gameField.getBunchOfTower(), gameField, gameField.getMap());
@@ -207,34 +226,62 @@ public class UI {
         quit = new ControlButton("src\\img\\close_2.png", "src\\img\\roll-close_2.png", 40, 40);
         quit.setBounds(1120, 10, 40, 40);
         gameField.add(quit);
-        quit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gameField.setPause(true);
-                int click = JOptionPane.showConfirmDialog(null, "The game has automatically saved, quit game?");
-                if(click == JOptionPane.YES_OPTION)
-                {
-                    Menu menu = new Menu();
-                    gameField.getClip().stop();
-                    gameField.getClip().close();
-                    gameField.getGameStage().setVisible(false);
-                    gameField.getGameStage().dispose();
-                }
-                if(click == JOptionPane.NO_OPTION)
-                {
-                    gameField.setPause(false);
-                }
-                if(click == JOptionPane.CANCEL_OPTION)
-                {
-                    gameField.setPause(false);
-                }
-                if(click == JOptionPane.CLOSED_OPTION)
-                {
-                    gameField.setPause(false);
-                }
-            }
-        });
+        quit.addActionListener(e -> quitAction());
+        leaderBoard_button.addActionListener(e -> leaderBoardAction());
+        backToMenu_button.addActionListener(e -> backToMenuAction());
+        playAgain_button.addActionListener(e -> playAgainAction());
     }
+
+    private void quitAction()
+    {
+        gameField.setPause(true);
+        int click = JOptionPane.showConfirmDialog(null, "The game has automatically saved, quit game?");
+        if(click == JOptionPane.YES_OPTION)
+        {
+            Menu menu = new Menu();
+            gameField.getClip().stop();
+            gameField.getClip().close();
+            gameField.getGameStage().setVisible(false);
+            gameField.getGameStage().dispose();
+        }
+        if(click == JOptionPane.NO_OPTION)
+        {
+            gameField.setPause(false);
+        }
+        if(click == JOptionPane.CANCEL_OPTION)
+        {
+            gameField.setPause(false);
+        }
+        if(click == JOptionPane.CLOSED_OPTION)
+        {
+            gameField.setPause(false);
+        }
+    }
+
+    private void leaderBoardAction()
+    {
+        gameField.destroy();
+        Menu menu = new Menu();
+        try {
+            menu.leaderBoardAction();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void playAgainAction()
+    {
+        gameField.destroy();
+        Menu menu = new Menu();
+        menu.startAction();
+    }
+
+    private void backToMenuAction()
+    {
+        gameField.destroy();
+        Menu menu = new Menu();
+    }
+
     public void onClickDraw(Graphics g)
     {
         buyNormalTowerButton.onClickDraw(g);
