@@ -3,8 +3,6 @@ package Bunch;
 import PortableEntity.Enemy.Enemy;
 import PortableEntity.GameEntity;
 import Screen.GameField;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -119,6 +119,7 @@ public class UI {
         this.playAgain_button.setVisible(true);
         this.backToMenu_button.setVisible(true);
         this.leaderBoard_button.setVisible(true);
+        result_score.setText(Integer.toString(gameField.getPlayer().getScore()));
         if(result.equals(GameField.WIN))
         {
             this.result_score.setVisible(true);

@@ -1,5 +1,4 @@
 import Console.Menu;
-import Screen.GameStage;
 import java.awt.*;
 
 public class TowerDefense {

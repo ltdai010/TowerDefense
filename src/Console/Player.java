@@ -185,9 +185,9 @@ public class Player implements Comparable<Player>{
     @Override
     public int compareTo(Player o) {
         if(this.stage != o.stage)
-            return this.stage - o.stage;
+            return o.stage - this.stage;
         if(this.score != o.score)
-            return this.score - o.score;
+            return o.score - this.score;
         return this.name.compareTo(o.name);
     }
 }
